@@ -1,0 +1,27 @@
+#food-icons
+{
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+}
+#food-icons a
+{
+    margin: 0 10px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+
+h1#summary 
+{
+    text-align: center;
+    font: bold;
+}
+
+h2{
+    font-family: 'Trebuchet MS';
+    margin: 2px;
+    padding: 10px; 
+
+}
