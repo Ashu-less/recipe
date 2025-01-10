@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <link rel="stylesheet" href="main.css">
     
 </head>
 <body>
@@ -13,7 +13,38 @@
         <p>Instagram for Food</p>
     </div>  
 
+    <div class = "container">
+        <div class = "form-wrapper">
+            <div class = "toggle-button">
+                <button id="SignInBtn" class="active">Sign In</button>
+                <button id="SignUpBtn" >Sign Up</button>
+            </div>
 
+            <form id="signInForm" class = "form-active">
+                <input type = "email" placeholder = "Email" required>
+                <input type = "password" placeholder="Password" required>
+            </form>
+            <form id="signUpForm" class = "form-active">
+                <input type = "text" placeholder="First Name" required>
+                <input type = "text" placeholder="Last Name" required>
+                <input type = "email" placeholder = "Email" required>
+                <input type = "password" placeholder="Password" required>
+                <label for = "preference">Choose Your Meal Type Preference</label>
+
+
+                <select name = "preference" id = "preference">
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Non-vegetarian">Vegetarian</option>
+                    <option value="Vegan">Vegetarian</option>
+                </select>
+                
+            </form>
+
+        </div>
+    </div>
+<script src = "main.js">
+    
+</script>
 
 </body>
 </html>

@@ -13,6 +13,71 @@
 
 
 
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.toggle-buttons button.active{
+    background: #6200ea;
+    color: white;
+}
+form
+{
+    display: none;
+}
+
+form .active
+{
+    display: block;
+}
+
+form input {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px olid #ccc;
+    border-radius: 4px;
+
+}
+
+form button {
+    padding: 10px 20px;
+    border: none;
+    background: #6200ea;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition:  0.3s;
+}
+
+form button     :hover{
+    background: #4500b5; 
+    opacity: 0.8;
+}
+
 h1#summary 
 {
     text-align: center;
@@ -25,3 +90,8 @@ h2{
     padding: 10px; 
 
 }
+
+.active, .btn:hover {
+    background-color: #666;
+    color: white;
+  }
