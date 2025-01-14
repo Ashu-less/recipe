@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS recipes(
+recipe_id INTEGER NOT NULL AUTO_INCREMENT ,
+dishName TEXT NOT NULL ,
+steps INTEGER, 
+dishType TEXT NOT NULL,
+PRIMARY KEY(recipe_id)
+);

@@ -1,17 +1,3 @@
-<<<<<<< Updated upstream
-document.addEventListener("DOMContentLoaded", () =>
-    {
-        const signInButton = document.getElementById("signInButton");
-        const signUpButton = document.getElementById("signUpButton");
-        const signInForm = document.getElementById("signInForm");
-        const signUpForm = document.getElementById("signUpForm");
-
-
-
-    } 
-
-)
-=======
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const signUpBtn = document.getElementById('SignUpBtn');
     const signInForm = document.getElementById('signInForm');
     const signUpForm = document.getElementById('signUpForm');
+
+    var mysql = require('mysql');
 
     signInForm.style.display = 'block';
     signUpForm.style.display = 'none';
@@ -37,5 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
         signInBtn.classList.remove('active');
     });
 
+
+    var con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "Ashutosh1!",
+        database: ""
+      });
+
+
 });
->>>>>>> Stashed changes
