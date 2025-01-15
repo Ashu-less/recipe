@@ -30,3 +30,13 @@
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
   }
+
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}

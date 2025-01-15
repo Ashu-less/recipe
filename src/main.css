@@ -1,18 +1,3 @@
-#food-icons
-{
-    display: none;
-    text-align: center;
-    margin-top: 10px;
-}
-#food-icons a
-{
-    margin: 0 10px;
-    text-decoration: none;
-    display: inline-block;
-}
-
-
-
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -27,10 +12,9 @@ body {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
-
 }
 
 .toggle-buttons {
@@ -39,17 +23,25 @@ body {
     margin-bottom: 20px;
 }
 
-.toggle-buttons button.active{
+.toggle-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toggle-buttons button.active {
     background: #6200ea;
     color: white;
 }
-form
-{
+
+form {
     display: none;
 }
 
-form .active
-{
+form.active {
     display: block;
 }
 
@@ -58,9 +50,8 @@ form input {
     width: 90%;
     margin: 10px auto;
     padding: 10px;
-    border: 1px olid #ccc;
+    border: 1px solid #ccc;
     border-radius: 4px;
-
 }
 
 form button {
@@ -70,28 +61,9 @@ form button {
     color: white;
     border-radius: 4px;
     cursor: pointer;
-    transition:  0.3s;
+    transition: 0.3s
 }
 
-form button     :hover{
-    background: #4500b5; 
-    opacity: 0.8;
+form button:hover {
+    background: #4500b5;
 }
-
-h1#summary 
-{
-    text-align: center;
-    font: bold;
-}
-
-h2{
-    font-family: 'Trebuchet MS';
-    margin: 2px;
-    padding: 10px; 
-
-}
-
-.active, .btn:hover {
-    background-color: #666;
-    color: white;
-  }

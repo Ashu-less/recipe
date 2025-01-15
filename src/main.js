@@ -1,8 +1,8 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const signInBtn = document.getElementById('SignInBtn');
-    const signUpBtn = document.getElementById('SignUpBtn');
+    const signInBtn = document.getElementById('SignInBtn"');
+    const signUpBtn = document.getElementById('SignInBtn');
     const signInForm = document.getElementById('signInForm');
     const signUpForm = document.getElementById('signUpForm');
 
@@ -26,12 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    var con = mysql.createConnection({
+    /*var con = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "Ashutosh1!",
         database: ""
-      });
+      });*/
 
 
 });
