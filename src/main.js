@@ -24,10 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInForm.classList.remove('active');
         signUpBtn.classList.add('active');
         signInBtn.classList.remove('active');
-
-
-  
-
+    });
     //var mysql = require('mysql');
     /*var con = mysql.createConnection({
         host: "localhost",
@@ -36,6 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
         database: ""
       });*/
 
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.style.borderColor = '#6200ea';
+            input.style.boxShadow = '0 0 5px rgba(98, 0, 234, 0.5)';
+        });
+        input.addEventListener('blur', () => {
+            input.style.borderColor = '#ccc';
+            input.style.boxShadow = 'none';
+        });
+    });
 
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.style.animation = 'shake 0.3s';
+            setTimeout(() => form.style.animation = '', 300);
+        });
     });
 });
