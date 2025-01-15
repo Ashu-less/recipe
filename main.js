@@ -1,41 +1,24 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
-
-
     const signInBtn = document.getElementById('SignInBtn');
     const signUpBtn = document.getElementById('SignUpBtn');
     const signInForm = document.getElementById('signInForm');
     const signUpForm = document.getElementById('signUpForm');
 
-    // Initially display the Sign In form
-    signInForm.classList.add('active');
-    signUpForm.classList.remove('active');
+    signInForm.style.display = 'block';
+    signUpForm.style.display = 'none';
 
     signInBtn.addEventListener('click', () => {
-        signInForm.classList.add('active');
-        signUpForm.classList.remove('active');
+        signInForm.style.display = 'block';
+        signUpForm.style.display = 'none';
         signInBtn.classList.add('active');
         signUpBtn.classList.remove('active');
-    });
 
+    });
     signUpBtn.addEventListener('click', () => {
-        signUpForm.classList.add('active');
-        signInForm.classList.remove('active');
+        signUpForm.style.display = 'block';
+        signInForm.style.display = 'none';
         signUpBtn.classList.add('active');
         signInBtn.classList.remove('active');
-
-
-  
-
-    //var mysql = require('mysql');
-    /*var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "Ashutosh1!",
-        database: ""
-      });*/
-
-
     });
+
 });

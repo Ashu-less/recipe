@@ -30,6 +30,7 @@ body {
     background: #e0e0e0;
     cursor: pointer;
     transition: 0.3s;
+    font-size: 16px;
 }
 
 .toggle-buttons button.active {
@@ -52,6 +53,16 @@ form input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 14px;
+}
+
+form select {
+    display: block;
+    width: 95%;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 form button {
@@ -61,7 +72,8 @@ form button {
     color: white;
     border-radius: 4px;
     cursor: pointer;
-    transition: 0.3s
+    transition: 0.3s;
+    font-size: 16px;
 }
 
 form button:hover {
