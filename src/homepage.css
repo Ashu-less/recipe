@@ -1,5 +1,15 @@
+.flex-container {
+  display: flex;
+  flex-direction: flow;
+}
 
+.flex-item-left {
+  flex: 50%;
+}
 
+.flex-item-right {
+  flex: 50%;
+}
 #home-recipes {
     display: none;
     font-style: normal;
@@ -19,11 +29,11 @@
     border: 1px solid rgb(112, 86, 117);
     }
 
-    .navgation{
-        flex-basis: 60%;
-        flex-wrap: 1;
-        flex-grow: 1;
-        flex-shrink: 0;
+  .navgation{
+      flex-basis: 60%;
+      flex-wrap: 1;
+      flex-grow: 1;
+      flex-shrink: 0;
     }
 
 ::-webkit-scrollbar-track {
@@ -39,4 +49,20 @@
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+}
+
+form input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #12d44d;
+  border-radius: 2px;
+  font-size: 12px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: blanchedalmond;
 }
