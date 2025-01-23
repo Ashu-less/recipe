@@ -20,7 +20,7 @@ db.connect(function(err) {
 });
 
 //thru sign up page
-app.post('/src/main', async (req, res) => {
+app.post('/main', async (req, res) => {
     const { username, password, firstName, lastName, email, preference} = req.body;
     //const hashedpassword = await bcrypt.hash(password, 10);
     const sql = 'INSERT INTO users (username, password, email, first_name, last_name, preference) VALUES (?, ?, ?, ?, ?, ?)';
@@ -36,7 +36,7 @@ app.post('/src/main', async (req, res) => {
 })
 
 //thru sign in page here
-app.post('/src/main', (req, res) => {
+app.post('/main', (req, res) => {
     const { username, password } = req.body;
     const sql = 'SELECT * FROM users WHERE username = ?';
     db.query(sql, [username], async (err, results) => {
