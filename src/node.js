@@ -2,9 +2,13 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+var http = require('http');
+var fs = require('fs');
 
 const app = express();
 app.use(bodyParser.json())
+const port = 8000; 
+
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -13,27 +17,49 @@ const db = mysql.createConnection({
     database: "recinsta"
 });
 
+http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(port);
+
 db.connect(function(err) {
     if (err) throw err;
     console.log("MYSQL Connected");
 
-});
 
 //thru sign up page
-app.post('/main', async (req, res) => {
-    const { username, password, firstName, lastName, email, preference} = req.body;
-    //const hashedpassword = await bcrypt.hash(password, 10);
-    const sql = 'INSERT INTO users (username, password, email, first_name, last_name, preference) VALUES (?, ?, ?, ?, ?, ?)';
-    db.query(sql, [username, password, email, firstName, lastName, preference], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error saving user in database');
-        } else {
-            res.status(201).send('User registered in database');
-        }
-    });
-    res.send("POST Request Called")
+    app.post('./index.html', async (req, res) => {
+        const { username, password, firstName, lastName, email, preference} = req.body;
+        //const hashedpassword = await bcrypt.hash(password, 10);
+        const sql = 'INSERT INTO users (username, password, email, first_name, last_name, preference) VALUES (?, ?, ?, ?, ?, ?)';
+        db.query(sql, [username, password, email, firstName, lastName, preference], (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error saving user in database');
+            } else {
+                res.status(201).send('User registered in database');
+            }
+        });
+        res.send("POST Request Called")
+    })
+
+    app.get('./index.html', (req, res) => {
+        res.send("GET Request Called test 1")
+        console.log("hohoho 1")
+    })
+
+});
+
+app.get('./index.html', (req, res) => {
+    res.send("GET Request Called test 2")
+    console.log("hehehe 2")
 })
+
+
+
+
+
 
 //thru sign in page here
 app.post('/main', (req, res) => {
@@ -51,6 +77,6 @@ app.post('/main', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
+app.listen(8000, () => {
+    console.log('Server running on http://localhost:8000');
 });

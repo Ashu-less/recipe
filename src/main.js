@@ -25,7 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
         signUpBtn.classList.add('active');
         signInBtn.classList.remove('active');
     });
-    
+    //var mysql = require('mysql');
+    /*var con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "Ashutosh1!",
+        database: ""
+      });*/
+
     const inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
         input.addEventListener('focus', () => {
@@ -40,51 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
-        signUpForm.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-        
-            const data = {
-                username: signUpForm.querySelector('input[placeholder="Username"]').value,
-                password: signUpForm.querySelector('input[placeholder="Password"]').value,
-                email: signUpForm.querySelector('input[placeholder="Email"]').value,
-                firstName: signUpForm.querySelector('input[placeholder="First Name"]').value,
-                lastName: signUpForm.querySelector('input[placeholder="Last Name"]').value,
-                preference: signUpForm.querySelector('#preference').value
-            };
-        
-            const response = await fetch('http://localhost:3000/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-        
-            if (response.ok) {
-                alert('Sign up successful!');
-                signUpForm.reset();
-            } else {
-                alert('Sign up failed. Try again.');
-            }
-        });
-
-        signInForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-        
-            const data = {
-                username: signInForm.querySelector('input[placeholder="Username"]').value,
-                password: signInForm.querySelector('input[placeholder="Password"]').value
-            };
-        
-            const response = await fetch('http://localhost:3000/signin', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-        
-            if (response.ok) {
-                alert('Sign in successful!');
-            } else {
-                alert('Invalid username or password.');
-            }
+            form.style.animation = 'shake 0.3s';
+            setTimeout(() => form.style.animation = '', 300);
         });
     });
+
+
+
+    
+
 });
