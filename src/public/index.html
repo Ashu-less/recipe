@@ -39,16 +39,15 @@
         </div>
     </div>
 
-    <!-- NEW homepage part of this file now-->
     <div id="homepageSection" class="container" style="display: none;">
         <aside class="sidebar">
             <div class="logo">RecInsta</div>
             <nav class="nav">
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#suggested">Suggested</a></li>
-                    <li><a href="#create">Create</a></li>
-                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="#home">🏠 Home</a></li>
+                    <li><a href="#suggested">⭐ Suggested</a></li>
+                    <li><a href="#create">✏️ Create</a></li>
+                    <li><a href="#profile">👤 Profile</a></li>
                     <li><a href="#settings">Settings</a></li>
                 </ul>
             </nav>
@@ -57,28 +56,82 @@
         <main class="main-content">
             <div class="recipe-grid">
                 <div class="recipe-card">
-                    <img src="recipe1.jpg" alt="Recipe 1">
-                    <h3>Recipe 1</h3>
+                    <img src="https://source.unsplash.com/W9OKrxBqiZA" alt="Spaghetti Carbonara">
+                    <h3>Classic Spaghetti Carbonara</h3>
                     <div class="actions">
-                        <span>❤️ 100 Likes</span>
-                        <span>💬 20 Comments</span>
+                        <span>❤️ 234 Likes</span>
+                        <span>💬 45 Comments</span>
                     </div>
                 </div>
                 <div class="recipe-card">
-                    <img src="recipe2.jpg" alt="Recipe 2">
-                    <h3>Recipe 2</h3>
+                    <img src="https://source.unsplash.com/SqYmTDQYMjo" alt="Crispy Fried Chicken">
+                    <h3>Southern Crispy Fried Chicken</h3>
                     <div class="actions">
-                        <span>❤️ 150 Likes</span>
-                        <span>💬 30 Comments</span>
+                        <span>❤️ 312 Likes</span>
+                        <span>💬 67 Comments</span>
                     </div>
                 </div>
                 <div class="recipe-card">
-                    <img src="recipe3.jpg" alt="Recipe 3">
-                    <h3>Recipe 3</h3>
+                    <img src="https://source.unsplash.com/IGfIGP5ONV0" alt="Vegetarian Buddha Bowl">
+                    <h3>Healthy Buddha Bowl</h3>
                     <div class="actions">
-                        <span>❤️ 200 Likes</span>
-                        <span>💬 40 Comments</span>
+                        <span>❤️ 189 Likes</span>
+                        <span>💬 28 Comments</span>
                     </div>
+                </div>
+                <div class="recipe-card">
+                    <img src="https://source.unsplash.com/MNtag_eXMKw" alt="Grilled Salmon">
+                    <h3>Lemon Herb Grilled Salmon</h3>
+                    <div class="actions">
+                        <span>❤️ 276 Likes</span>
+                        <span>💬 52 Comments</span>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <img src="https://source.unsplash.com/20jX9b35r_M" alt="Margherita Pizza">
+                    <h3>Authentic Margherita Pizza</h3>
+                    <div class="actions">
+                        <span>❤️ 425 Likes</span>
+                        <span>💬 89 Comments</span>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <img src="https://source.unsplash.com/PLyJqEJVre0" alt="Chocolate Cake">
+                    <h3>Double Chocolate Layer Cake</h3>
+                    <div class="actions">
+                        <span>❤️ 367 Likes</span>
+                        <span>💬 73 Comments</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-group">
+                    <select class="filter-select" id="mealType">
+                        <option value="all">All Meals</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="snacks">Snacks</option>
+                    </select>
+                    <select class="filter-select" id="dietType">
+                        <option value="all">All Diets</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="non-vegetarian">Non-Vegetarian</option>
+                        <option value="gluten-free">Gluten Free</option>
+                    </select>
+                    <select class="filter-select" id="cookingTime">
+                        <option value="all">Any Time</option>
+                        <option value="quick">Quick (< 30 mins)</option>
+                        <option value="medium">Medium (30-60 mins)</option>
+                        <option value="long">Long (> 60 mins)</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <input type="text" placeholder="Search recipes..." id="searchRecipes">
+                    <button class="search-btn">🔍</button>
                 </div>
             </div>
         </main>
@@ -86,7 +139,6 @@
 
     <script src="main.js"></script>
     <script>
-
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Page loaded, attaching signup handler');
         
@@ -118,7 +170,6 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
             },
             body: JSON.stringify(formData)
         })
@@ -130,7 +181,8 @@
             console.log('Server response:', data);
             if (data.message) {
                 alert('Registration successful!');
-                window.location.href = 'homepage.html';
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('homepageSection').style.display = 'flex';
             } else {
                 alert('Registration failed: ' + (data.error || 'Unknown error'));
             }
@@ -139,23 +191,6 @@
             console.error('Fetch error:', error);
             alert('Registration failed. Please check console for details.');
         });
-    }
-
-
-
-    function handleHomepage(event)
-    {
-        event.preventDefault();
-        fetch('http://localhost:8000/homepage', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-
-
     }
     </script>
 </body>

@@ -1,12 +1,12 @@
 document.getElementById("signInForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
 
     
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const username = document.querySelector("#signInForm input[type='text']").value;
+    const password = document.querySelector("#signInForm input[type='password']").value;
 
     if (username && password) {
-        fetch('/index.html', {
+        fetch('/signin', {  
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,22 +14,18 @@ document.getElementById("signInForm").addEventListener("submit", function (event
             body: JSON.stringify({ username, password })
         })
         .then(response => {
-            if (response.status === 200) {
-                // If login successful, show homepage section
-                document.getElementById("authSection").style.display = "none";
+            if (response.ok) {
+                // Show homepage section
+                document.getElementById("auth-section").style.display = "none";
                 document.getElementById("homepageSection").style.display = "flex";
             } else {
                 alert('Invalid username or password');
             }
         })
         .catch(error => console.error('Error:', error));
-    }
-
-        /*document.getElementById("authSection").style.display = "none";
-        document.getElementById("homepageSection").style.display = "flex";
     } else {
         alert("Please enter valid username and password");
-    }*/
+    }
 });
 
 
@@ -69,40 +65,38 @@ document.getElementById("signUpForm").addEventListener("submit", function (event
     }
 });
 
-function handleSignup(event) {
-    event.preventDefault();
-    console.log('Signup form submitted');
-    
-    const formData = {
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value,
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        preference: document.getElementById('preference').value
-    };
-    
-    console.log('Sending data:', formData);
-    
-    fetch('http://localhost:8000/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        console.log('Response status:', response.status);
-        return response.text();
-    })
-    .then(data => {
-        console.log('Server response:', data);
-        // You might want to add some user feedback here
-        alert('Registration successful!');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Registration failed. Please try again.');
-    });
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const mealType = document.getElementById('mealType');
+    const dietType = document.getElementById('dietType');
+    const cookingTime = document.getElementById('cookingTime');
+    const searchInput = document.getElementById('searchRecipes');
+    const searchBtn = document.querySelector('.search-btn');
+
+    function filterRecipes() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedMeal = mealType.value;
+        const selectedDiet = dietType.value;
+        const selectedTime = cookingTime.value;
+
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        
+        recipeCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            let shouldShow = true;
+
+            if (searchTerm && !title.includes(searchTerm)) {
+                shouldShow = false;
+            }
+
+
+            card.style.display = shouldShow ? 'block' : 'none';
+        });
+    }
+
+    searchBtn.addEventListener('click', filterRecipes);
+    searchInput.addEventListener('keyup', filterRecipes);
+    mealType.addEventListener('change', filterRecipes);
+    dietType.addEventListener('change', filterRecipes);
+    cookingTime.addEventListener('change', filterRecipes);
+});
 

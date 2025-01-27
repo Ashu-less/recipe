@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: 'Ashutosh1!',  
+    password: '',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -36,7 +36,7 @@ db.on('error', (err) => {
     }
 });
 
-app.get('/index.html', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
@@ -75,6 +75,22 @@ app.post('/signup', async (req, res) => {
             message: 'User registered successfully',
             userId: result.insertId 
         });
+    });
+});
+
+app.post('/signin', (req, res) => {
+    const { username, password } = req.body;
+    
+    const sql = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    db.query(sql, [username, password], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (result.length > 0) {
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            res.status(401).json({ error: 'Invalid credentials' });
+        }
     });
 });
 
