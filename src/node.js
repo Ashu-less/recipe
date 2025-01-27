@@ -1,3 +1,4 @@
+//sign in  and sign up, front end for home and default food preferences )(the sections on the front of the homepage-> like picking vegetarian foods and whatnot) 
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
@@ -14,8 +15,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: '',  
-    database: 'recinsta'  
+    password: 'Ashutosh1!',  
+    database: 'recinsta',
+    //port: '8000'
 });
 
 db.connect((err) => {
@@ -33,10 +35,6 @@ db.on('error', (err) => {
         throw err;
     }
 });
-app.get('/', (req, res) => {
-    res.send("GET Request Called test 2")
-    console.log("hehehe 2")
-})
 
 app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -79,23 +77,6 @@ app.post('/signup', async (req, res) => {
         });
     });
 });
-
-//thru sign in page here
-/*app.post('/index.html', (req, res) => {
-    const { username, password } = req.body;
-    const sql = 'SELECT * FROM users WHERE username = ?';
-    db.query(sql, [username], async (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error fetching user.');
-        } else if (results.length === 0 || !(await bcrypt.compare(password, results[0].password))) {
-            res.status(401).send('Invalid username or password.');
-        } else {
-            res.status(200).send('Login successful!');
-        }
-    });
-});*/
-
 
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');

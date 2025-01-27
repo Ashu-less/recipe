@@ -140,6 +140,23 @@
             alert('Registration failed. Please check console for details.');
         });
     }
+
+
+
+    function handleHomepage(event)
+    {
+        event.preventDefault();
+        fetch('http://localhost:8000/homepage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+
+
+    }
     </script>
 </body>
 </html>
