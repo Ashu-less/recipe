@@ -13,9 +13,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',  // your MySQL username
-    password: '',  // your MySQL password
-    database: 'recinsta'  // your database name
+    user: 'root',  
+    password: '',  
+    database: 'recinsta'  
 });
 
 db.connect((err) => {
@@ -25,8 +25,6 @@ db.connect((err) => {
     }
     console.log('MySQL Connected');
 });
-
-// Add error handler for database connection
 db.on('error', (err) => {
     console.error('Database error:', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
@@ -35,7 +33,6 @@ db.on('error', (err) => {
         throw err;
     }
 });
-
 app.get('/', (req, res) => {
     res.send("GET Request Called test 2")
     console.log("hehehe 2")
@@ -45,7 +42,6 @@ app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Add this middleware to log all incoming requests
 app.use((req, res, next) => {
     console.log('Incoming request:', {
         method: req.method,
@@ -61,7 +57,7 @@ app.post('/signup', async (req, res) => {
     
     const { username, password, firstName, lastName, email, preference } = req.body;
     
-    // Log the values being inserted
+    
     console.log('Values being inserted:', { username, password, firstName, lastName, email, preference });
     
     const sql = 'INSERT INTO users (username, password, email, first_name, last_name, preference) VALUES (?, ?, ?, ?, ?, ?)';

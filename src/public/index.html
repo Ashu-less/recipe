@@ -86,7 +86,7 @@
 
     <script src="main.js"></script>
     <script>
-    // Add event listener when the page loads
+
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Page loaded, attaching signup handler');
         
@@ -102,8 +102,7 @@
     function handleSignup(event) {
         event.preventDefault();
         console.log('Signup form submitted');
-        
-        // Get form values
+
         const formData = {
             username: document.getElementById('username').value,
             password: document.getElementById('password').value,
@@ -114,8 +113,7 @@
         };
         
         console.log('Form data collected:', formData);
-        
-        // Make the API call
+
         fetch('http://localhost:8000/signup', {
             method: 'POST',
             headers: {
