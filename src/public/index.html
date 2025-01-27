@@ -23,21 +23,18 @@
 
             <form id="signUpForm">
                 <h2>Sign Up</h2>
-                <input type="text" placeholder="First Name" required>
-                <input type="text" placeholder="Last Name" required>
-                <input type="text" placeholder="Username" required>
-                <input type="password" placeholder="Password" required>
-                <input type="email" placeholder="Email" required>
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="email" id="email" placeholder="Email" required>
                 <label for="preference">Meal Preference:</label>
                 <select name="preference" id="preference">
                     <option value="Vegetarian">Vegetarian</option>
                     <option value="Non-vegetarian">Non-vegetarian</option>
                     <option value="Vegan">Vegan</option>
                 </select>
-                <a href = "homepage.html">
-                    <button type="submit">Sign Up</button>
-                </a>
-                
+                <button type="submit">Sign Up</button>
             </form>
         </div>
     </div>
@@ -88,5 +85,63 @@
     </div>
 
     <script src="main.js"></script>
+    <script>
+    // Add event listener when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded, attaching signup handler');
+        
+        const signUpForm = document.getElementById('signUpForm');
+        if (signUpForm) {
+            console.log('Found signup form');
+            signUpForm.addEventListener('submit', handleSignup);
+        } else {
+            console.error('Could not find signup form!');
+        }
+    });
+
+    function handleSignup(event) {
+        event.preventDefault();
+        console.log('Signup form submitted');
+        
+        // Get form values
+        const formData = {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            preference: document.getElementById('preference').value
+        };
+        
+        console.log('Form data collected:', formData);
+        
+        // Make the API call
+        fetch('http://localhost:8000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            console.log('Response received:', response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Server response:', data);
+            if (data.message) {
+                alert('Registration successful!');
+                window.location.href = 'homepage.html';
+            } else {
+                alert('Registration failed: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('Registration failed. Please check console for details.');
+        });
+    }
+    </script>
 </body>
 </html>
