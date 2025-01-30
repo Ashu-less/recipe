@@ -1,4 +1,6 @@
 1. Likes and comments-> real time
 2. Side link pages (front end) profile,setting, suggested, create
 3.  images get inserted and more foods :/
+4. sign out feature
+
  

@@ -305,3 +305,99 @@ body {
         width: 100%;
     }
 }
+
+
+.like-btn i {
+    font-size: 40px;
+    cursor: pointer;
+    color: #4CAF50;
+    transition: color 0.3s ease;
+}
+
+.like-btn.active i {
+    color: #af4c4c;
+}
+
+.heart:before {
+    display: block;
+    position: absolute;
+    top: 200;
+    left: 0;
+    width: 20%;
+    font-family: 'icons';
+    font-size: 21px;
+    text-indent: 0;
+    font-variant: normal;
+    line-height: 21px;
+  }
+  .heart {
+    position: relative;
+    width: 30px;
+    overflow: inherit;
+    margin: 10px auto;
+    list-style: none;
+    -webkit-animation: animateHeart 2.5s infinite;
+    animation: animateHeart 2.5s infinite;
+  }
+  .heart:before,
+  .heart:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 10%;
+    width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 100px 100px 0 0;
+    -webkit-transform: rotate(-45deg) translateZ(0);
+    transform: rotate(-45deg) translateZ(0);
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+  }
+  .heart:after {
+    left: 10%;
+    -webkit-transform: rotate(45deg) translateZ(0);
+    transform: rotate(45deg) translateZ(0);
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+  }
+  @-webkit-keyframes animateHeart {
+    0% {
+      -webkit-transform: scale(0.8);
+    }
+    5% {
+      -webkit-transform: scale(0.9);
+    }
+    10% {
+      -webkit-transform: scale(0.8);
+    }
+    15% {
+      -webkit-transform: scale(1);
+    }
+    50% {
+      -webkit-transform: scale(0.8);
+    }
+    100% {
+      -webkit-transform: scale(0.8);
+    }
+  }
+  @keyframes animateHeart {
+    0% {
+      transform: scale(0.8);
+    }
+    5% {
+      transform: scale(0.9);
+    }
+    10% {
+      transform: scale(0.8);
+    }
+    15% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(0.8);
+    }
+  }

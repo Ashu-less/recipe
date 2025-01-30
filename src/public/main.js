@@ -100,3 +100,21 @@ document.addEventListener('DOMContentLoaded', function() {
     cookingTime.addEventListener('change', filterRecipes);
 });
 
+
+
+function toggleLike() {
+    let likeBtn = document.querySelector('.like-btn');
+    likeBtn.classList.toggle('active');
+}
+
+/*function likeCount()
+{
+    var likeCount = 0;
+    for()
+}*/
+
+$(function() {
+    $(".heart").on("click", function() {
+      $(this).toggleClass("is-active");
+    });
+  });
