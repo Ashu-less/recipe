@@ -7,20 +7,18 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div id = "auth-section" class="container">
+    <div id="auth-section" class="container">
         <div class="form-wrapper">
             <div class="toggle-buttons">
                 <button id="SignInBtn" class="active">Sign In</button>
                 <button id="SignUpBtn">Sign Up</button>
             </div>
-
             <form id="signInForm" class="active">
                 <h2>Sign In</h2>
                 <input type="text" placeholder="Username" required>
                 <input type="password" placeholder="Password" required>
                 <button type="submit">Sign In</button>
             </form>
-
             <form id="signUpForm">
                 <h2>Sign Up</h2>
                 <input type="text" id="firstName" placeholder="First Name" required>
@@ -39,243 +37,131 @@
         </div>
     </div>
 
-    <div id="homepageSection" class="container" style="display: none;">
-        <img src="C:\Users\K1218460\OneDrive - Katy Independent School District\GitHub\recipe\src\images\Classic Spaghetti Carbonara.jpg" alt="Spaghetti Carbonara">here</img> 
-        <aside class="sidebar">
-            <div class="logo">RecInsta</div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#home">🏠 Home</a></li>
-                    <li><a href="#suggested">⭐ Suggested</a></li>
-                    <li><a href="#create">✏️ Create</a></li>
-                    <li><a href="#profile">👤 Profile</a></li>
-                    <li><a href="#settings">⚙ Settings</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main class="main-content">
-            
-            <div class="recipe-grid">
-                <img src="C:\Users\K1218460\OneDrive - Katy Independent School District\GitHub\recipe\src\images\Classic Spaghetti Carbonara.jpg" alt="Spaghetti Carbonara">here</img> 
-                <div class="recipe-card">
-                    
-                    <h3>Classic Spaghetti Carbonara</h3>
-                    <div class="actions">
-                        <span>❤️ 234 Likes</span>
-                        <span>💬 45 Comments</span>
-                    </div>
-                    <div class = "like-button">
-                        <i class="heart"></i>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <img src="/images/Southern Crispy Fried Chicken.jpg" alt="Crispy Fried Chicken">
-                    <h3>Southern Crispy Fried Chicken</h3>
-                    <div class="actions">
-                        <span>❤️ 312 Likes</span>
-                        <span>💬 67 Comments</span>
-                    </div>
-                    <div class = "like-button">
-                        <i class="heart"></i>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <img src="/images/Healthy Buddha Bowl.jpg" alt="Vegetarian Buddha Bowl">
-                    <h3>Healthy Buddha Bowl</h3>
-                    <div class="actions">
-                        <span>❤️ 189 Likes</span>
-                        <span>💬 28 Comments</span>
-                    </div>
-                    <div class = "like-button">
-                        <i class="heart">
-
-                        </i>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <img src="/images/Lemon Herb Grilled Salmon.jpg" alt="Grilled Salmon">
-                    <h3>Lemon Herb Grilled Salmon</h3>
-                    <div class="actions">
-                        <span>❤️ 276 Likes</span>
-                        <span>💬 52 Comments</span>
-                    </div>
-                    <div class = "like-button">
-                        <i class="heart"></i>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <img src="/images/Authentic Margherita Pizza.jpg" alt="Margherita Pizza">
-                    <h3>Authentic Margherita Pizza</h3>
-                    <div class="actions">
-                        <span>❤️ 425 Likes</span>
-                        <span>💬 89 Comments</span>
-                    </div>
-                    <div class = "like-button">
-                        <i class="heart"></i>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <img src="/images/Double Chocolate Layer Cake.jpg" alt="Chocolate Cake">
-                    <h3>Double Chocolate Layer Cake</h3>
-                    <div class="actions">
-                        <span>❤️ 367 Likes</span>
-                        <span>💬 73 Comments</span>
-                    </div>
-                    <div class = "like-button">
-                        <i class="heart"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-section">
-                <div class="filter-group">
-                    <select class="filter-select" id="mealType">
-                        <option value="all">All Meals</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="dessert">Dessert</option>
-                        <option value="snacks">Snacks</option>
-                    </select>
-                    <select class="filter-select" id="dietType">
-                        <option value="all">All Diets</option>
-                        <option value="vegetarian">Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                        <option value="non-vegetarian">Non-Vegetarian</option>
-                        <option value="gluten-free">Gluten Free</option>
-                    </select>
-                    <select class="filter-select" id="cookingTime">
-                        <option value="all">Any Time</option>
-                        <option value="quick">Quick (< 30 mins)</option>
-                        <option value="medium">Medium (30-60 mins)</option>
-                        <option value="long">Long (> 60 mins)</option>
-                    </select>
-                </div>
-                <div class="search-group">
-                    <input type="text" placeholder="Search recipes..." id="searchRecipes">
-                    <button class="search-btn">🔍</button>
-                </div>
-            </div>
-        </main>
-
-
-        <main class="suggested-page">
-            <div class="filter-section">
-                <div class="filter-group">
-                    <select class="filter-select" id="mealType">
-                        <option value="all">All Meals</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="dessert">Dessert</option>
-                        <option value="snacks">Snacks</option>
-                    </select>
-                    <select class="filter-select" id="dietType">
-                        <option value="all">All Diets</option>
-                        <option value="vegetarian">Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                        <option value="non-vegetarian">Non-Vegetarian</option>
-                        <option value="gluten-free">Gluten Free</option>
-                    </select>
-                </div>
-
-
-                <div>
-                    <strong>Most Liked</strong>
-
-                </div>
-        </main>
-
-        <main class="create-page">
-
-
-
-        </main>
-        <main class="profile-page">
-
-
-
-        </main>
-        <main class="setting-page">
-
-
-
-        </main>
+    <div id="navbar">
+        <button id="homeBtn" class="nav-button active">🏠 Home</button>
+        <button id="suggestedBtn" class="nav-button">⭐ Suggested</button>
+        <button id="createBtn" class="nav-button">✏️ Create</button>
+        <button id="profileBtn" class="nav-button">👤 Profile</button>
+        <button id="settingsBtn" class="nav-button">⚙ Settings</button>
     </div>
 
-    <div id="Create-section" class="container" style="display: none;">
-        <aside class="sidebar3">
-            <div class="logo">RecInsta</div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#home">🏠 Home</a></li>
-                    <li><a href="#suggested">⭐ Suggested</a></li>
-                    <li><a href="#create">✏️ Create</a></li>
-                    <li><a href="#profile">👤 Profile</a></li>
-                    <li><a href="#settings">⚙ Settings</a></li>
-                </ul>
-            </nav>
-        </aside>
+    <div id="homepageSection" class="container" style="display: none;">
+        <div class="recipe-grid">
+            <div class="recipe-card">
+                <div class="icon">🍝</div>
+                <h3>Classic Spaghetti Carbonara</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">234</span> Likes</span>
+                    <span>💬 45 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card">
+                <div class="icon">🍗</div>
+                <h3>Southern Crispy Fried Chicken</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">312</span> Likes</span>
+                    <span>💬 67 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card">
+                <div class="icon">🥗</div>
+                <h3>Healthy Buddha Bowl</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">189</span> Likes</span>
+                    <span>💬 28 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card">
+                <div class="icon">🐟</div>
+                <h3>Lemon Herb Grilled Salmon</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">276</span> Likes</span>
+                    <span>💬 52 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card">
+                <div class="icon">🍕</div>
+                <h3>Authentic Margherita Pizza</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">425</span> Likes</span>
+                    <span>💬 89 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card">
+                <div class="icon">🍰</div>
+                <h3>Double Chocolate Layer Cake</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">367</span> Likes</span>
+                    <span>💬 73 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div id="suggestedSection" class="container" style="display: none;">
+        <h2>Suggested Recipes</h2>
+        <div class="recipe-grid">
+            <div class="recipe-card">
+                <div class="icon">🍲</div>
+                <h3>Suggested Recipe 1</h3>
+                <p>Description of suggested recipe 1.</p>
+                <div class="actions">
+                    <span>❤️ 100 Likes</span>
+                    <span>💬 10 Comments</span>
+                </div>
+            </div>
+            <div class="recipe-card">
+                <div class="icon">🍜</div>
+                <h3>Suggested Recipe 2</h3>
+                <p>Description of suggested recipe 2.</p>
+                <div class="actions">
+                    <span>❤️ 150 Likes</span>
+                    <span>💬 20 Comments</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div id="createSection" class="container" style="display: none;">
+        <h2>Create a Recipe</h2>
+        <form id="createRecipeForm">
+            <input type="text" placeholder="Recipe Name" required>
+            <textarea placeholder="Recipe Instructions" required></textarea>
+            <input type="text" placeholder="Ingredients (comma separated)" required>
+            <button type="submit">Create Recipe</button>
+        </form>
+    </div>
 
+    <div id="profileSection" class="container" style="display: none;">
+        <h2>Your Profile</h2>
+        <p>Profile information will be displayed here.</p>
+        <div>
+            <strong>Username:</strong> <span id="profileUsername">User123</span>
+        </div>
+        <div>
+            <strong>Email:</strong> <span id="profileEmail">user@example.com</span>
+        </div>
+        <button id="editProfileBtn">Edit Profile</button>
+    </div>
+
+    <div id="settingsSection" class="container" style="display: none;">
+        <h2>Settings</h2>
+        <form id="settingsForm">
+            <label for="notification">Notifications:</label>
+            <select id="notification">
+                <option value="enabled">Enabled</option>
+                <option value="disabled">Disabled</option>
+            </select>
+            <button type="submit">Save Settings</button>
+        </form>
     </div>
 
     <script src="main.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Page loaded, attaching signup handler');
-        
-        const signUpForm = document.getElementById('signUpForm');
-        if (signUpForm) {
-            console.log('Found signup form');
-            signUpForm.addEventListener('submit', handleSignup);
-        } else {
-            console.error('Could not find signup form!');
-        }
-    });
-
-    function handleSignup(event) {
-        event.preventDefault();
-        console.log('Signup form submitted');
-
-        const formData = {
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value,
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            preference: document.getElementById('preference').value
-        };
-        
-        console.log('Form data collected:', formData);
-
-        fetch('http://localhost:8000/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            console.log('Response received:', response.status);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Server response:', data);
-            if (data.message) {
-                alert('Registration successful!');
-                document.getElementById('auth-section').style.display = 'none';
-                document.getElementById('homepageSection').style.display = 'flex';
-            } else {
-                alert('Registration failed: ' + (data.error || 'Unknown error'));
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            alert('Registration failed. Please check console for details.');
-        });
-    }
-    </script>
 </body>
 </html>

@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: 'Ashutosh1!',  
+    password: '',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -94,6 +94,42 @@ app.post('/signin', (req, res) => {
     });
 });
 
+/*
+const createTableSQL = `
+CREATE TABLE IF NOT EXISTS likes_comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT NOT NULL,
+    user_id INT NOT NULL,
+    is_liked BOOLEAN,
+    comment TEXT,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
+`;
+
+db.query(createTableSQL, (err) => {
+    if (err) throw err;
+});
+
+
+app.post('/like', (req, res) => {
+    const { recipe_id, user_id } = req.body;
+    const sql = 'INSERT INTO likes_comments (recipe_id, user_id, is_liked) VALUES (?, ?, ?)';
+    db.query(sql, [recipe_id, user_id, true], (err, result) => {
+        if (err) return res.status(500).json({ error: 'Database error' });
+        res.status(200).json({ message: 'Like added' });
+    });
+});
+
+
+app.post('/comment', (req, res) => {
+    const { recipe_id, user_id, comment } = req.body;
+    const sql = 'INSERT INTO likes_comments (recipe_id, user_id, comment) VALUES (?, ?, ?)';
+    db.query(sql, [recipe_id, user_id, comment], (err, result) => {
+        if (err) return res.status(500).json({ error: 'Database error' });
+        res.status(200).json({ message: 'Comment added' });
+    });
+});
+*/
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');
 });

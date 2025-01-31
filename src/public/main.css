@@ -94,13 +94,10 @@ form button:hover {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 #homepageSection {
@@ -307,15 +304,18 @@ body {
 }
 
 
-.like-btn i {
-    font-size: 40px;
+.like-btn {
+    background: none;
+    border: none;
+    color: #6200ea;
     cursor: pointer;
-    color: #4CAF50;
-    transition: color 0.3s ease;
+    font-size: 24px;
+    transition: transform 0.2s;
 }
 
-.like-btn.active i {
-    color: #af4c4c;
+.like-btn.liked {
+    transform: scale(1.2);
+    color: red;
 }
 
 .heart:before {
@@ -401,3 +401,148 @@ body {
       transform: scale(0.8);
     }
   }
+
+#navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #6200ea;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.nav-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-button.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #6200ea;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #6200ea;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.recipe-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.recipe-card .icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.recipe-card h3 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #eee;
+    color: #666;
+    font-size: 14px;
+}
+
+.actions span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+form {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+form input, form select, form textarea {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #3700b3;
+}
+
+@media (max-width: 768px) {
+    #navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .recipe-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    color: #6200ea;
+    cursor: pointer;
+    font-size: 24px;
+    transition: transform 0.2s;
+}
+
+.like-btn.liked {
+    transform: scale(1.2);
+    color: red;
+}
