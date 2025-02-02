@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: 'Ashutosh1!',  
+    password: '',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -130,6 +130,7 @@ app.post('/comment', (req, res) => {
     });
 });
 */
+
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');
 });

@@ -49,8 +49,7 @@
         <div class="recipe-grid">
             <div class="recipe-card">
                 <div class="icon">
-                    
-
+                    <img src = "\images\Classic Spaghetti Carbonara.jpg">
                     🍝</div>
                 <h3>Classic Spaghetti Carbonara</h3>
                 <div class="actions">
@@ -60,7 +59,9 @@
                 </div>
             </div>
             <div class="recipe-card">
-                <div class="icon">🍗</div>
+                <div class="icon">
+                    <img src = "\images\Southern Crispy Fried Chicken.jpg">
+                    🍗</div>
                 <h3>Southern Crispy Fried Chicken</h3>
                 <div class="actions">
                     <span class="like-count">❤️ <span class="likes">312</span> Likes</span>
@@ -69,7 +70,9 @@
                 </div>
             </div>
             <div class="recipe-card">
-                <div class="icon">🥗</div>
+                <div class="icon">
+                    <img src = "\images\Healthy Buddha Bowl.jpg">
+                    🥗</div>
                 <h3>Healthy Buddha Bowl</h3>
                 <div class="actions">
                     <span class="like-count">❤️ <span class="likes">189</span> Likes</span>
@@ -101,7 +104,9 @@
                 </div>
             </div>
             <div class="recipe-card">
-                <div class="icon">🍰</div>
+                <div class="icon">
+                    <img src = "\images\Double Chocolate Layer Cake.jpg">
+                    🍰</div>
                 <h3>Double Chocolate Layer Cake</h3>
                 <div class="actions">
                     <span class="like-count">❤️ <span class="likes">367</span> Likes</span>
@@ -120,8 +125,9 @@
                 <h3>Suggested Recipe 1</h3>
                 <p>Description of suggested recipe 1.</p>
                 <div class="actions">
-                    <span>❤️ 100 Likes</span>
+                    <span class="like-count">❤️ <span class="likes">100</span> Likes</span>
                     <span>💬 10 Comments</span>
+                    <button class="like-btn">❤️</button>
                 </div>
             </div>
             <div class="recipe-card">
@@ -129,8 +135,9 @@
                 <h3>Suggested Recipe 2</h3>
                 <p>Description of suggested recipe 2.</p>
                 <div class="actions">
-                    <span>❤️ 150 Likes</span>
+                    <span class="like-count">❤️ <span class="likes">150</span> Likes</span>
                     <span>💬 20 Comments</span>
+                    <button class="like-btn">❤️</button>
                 </div>
             </div>
         </div>
@@ -148,13 +155,13 @@
 
     <div id="profileSection" class="container" style="display: none;">
         <h2>Your Profile</h2>
-        <p>Profile information will be displayed here.</p>
-        <div>
-            <strong>Username:</strong> <span id="profileUsername">User123</span>
-        </div>
-        <div>
-            <strong>Email:</strong> <span id="profileEmail">user@example.com</span>
-        </div>
+        <p><strong>First Name:</strong> <span id="profileFirstName">John</span></p>
+        <p><strong>Last Name:</strong> <span id="profileLastName">Doe</span></p>
+        <p><strong>Email:</strong> <span id="profileEmail">johndoe@example.com</span></p>
+        <p><strong>Password:</strong> <input type="password" id="profilePassword" value="password123" disabled>
+            <button id="togglePassword">Show</button>
+        </p>
+        <p><strong>About Me:</strong> <textarea id="aboutMe"></textarea></p>
         <button id="editProfileBtn">Edit Profile</button>
     </div>
 
@@ -166,6 +173,8 @@
                 <option value="enabled">Enabled</option>
                 <option value="disabled">Disabled</option>
             </select>
+            <label for="themeColor">Theme Color:</label>
+            <input type="color" id="themeColor" value="#6200ea">
             <button type="submit">Save Settings</button>
         </form>
     </div>

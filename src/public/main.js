@@ -121,7 +121,12 @@ function handleSignup(event) {
 function showSection(sectionId) {
     const sections = ["homepageSection", "suggestedSection", "createSection", "profileSection", "settingsSection"];
     sections.forEach(id => {
-        document.getElementById(id).style.display = id === sectionId ? "block" : "none";
+        const section = document.getElementById(id);
+        if (id === sectionId) {
+            section.style.display = "block"; 
+        } else {
+            section.style.display = "none";
+        }
     });
 }
 
@@ -222,3 +227,93 @@ $(function() {
       $(this).toggleClass("is-active");
     });
   });
+
+  function loadSuggestedRecipes(preference) {
+    fetch(`/suggested?preference=${preference}`)
+        .then(response => response.json())
+        .then(recipes => {
+            const suggestedRecipesContainer = document.getElementById('suggestedRecipes');
+            suggestedRecipesContainer.innerHTML = '';
+            
+            recipes.sort((a, b) => b.likes - a.likes);
+            recipes.forEach(recipe => {
+                const recipeCard = document.createElement('div');
+                recipeCard.classList.add('recipe-card');
+                recipeCard.innerHTML = `
+                    <div class="icon">${recipe.icon}</div>
+                    <h3>${recipe.name}</h3>
+                    <p>${recipe.description}</p>
+                    <div class="actions">
+                        <span>❤️ ${recipe.likes} Likes</span>
+                        <span>💬 ${recipe.comments} Comments</span>
+                    </div>
+                `;
+                suggestedRecipesContainer.appendChild(recipeCard);
+            });
+        })
+        .catch(error => console.error('Error loading suggested recipes:', error));
+  }
+
+  document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const recipeName = document.getElementById('recipeName').value;
+    const recipeIngredients = document.getElementById('recipeIngredients').value;
+    const recipeSteps = document.getElementById('recipeSteps').value;
+    const recipeImage = document.getElementById('recipeImage').files[0];
+
+    const formData = new FormData();
+    formData.append('name', recipeName);
+    formData.append('ingredients', recipeIngredients);
+    formData.append('steps', recipeSteps);
+    formData.append('image', recipeImage);
+
+    fetch('/createRecipe', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Recipe created successfully!');
+            window.location.reload();  
+        } else {
+            alert('Failed to create recipe.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordField = document.getElementById('profilePassword');
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        this.textContent = 'Hide';
+    } else {
+        passwordField.type = 'password';
+        this.textContent = 'Show';
+    }
+});
+
+document.getElementById('settingsForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const newPassword = document.getElementById('changePassword').value;
+    const country = document.getElementById('country').value;
+    const themeColor = document.getElementById('themeColor').value;
+    
+    fetch('/updateSettings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newPassword, country, themeColor })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Settings updated successfully!');
+        } else {
+            alert('Failed to update settings.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});

@@ -63,17 +63,22 @@ form {
     display: none;
     flex-direction: column;
     align-items: center;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 form.active {
     display: flex; 
 }
 
-form input, form select {
+form input, form select, form textarea {
     margin: 10px 0;
     padding: 10px;
-    font-size: 14px;
-    width: 250px;
+    font-size: 16px;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -83,14 +88,14 @@ form button {
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 form button:hover {
-    background-color: #4500ce;
+    background-color: #3700b3;
 }
 
 body {
@@ -154,52 +159,7 @@ body {
     width: calc(100% - 250px);
 }
 
-.recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 20px;
-}
 
-.recipe-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.recipe-card:hover {
-    transform: translateY(-5px);
-}
-
-.recipe-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.recipe-card h3 {
-    padding: 15px;
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
-
-.recipe-card .actions {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #eee;
-    color: #666;
-    font-size: 14px;
-}
-
-.recipe-card .actions span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
 
 .filter-section {
     background: white;
@@ -470,9 +430,33 @@ h2 {
     margin-bottom: 10px;
 }
 
+.recipe-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
 .recipe-card h3 {
     font-size: 20px;
     margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+
+.recipe-card .actions {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    color: #666;
+    font-size: 14px;
+}
+
+.recipe-card .actions span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .actions {
@@ -488,38 +472,6 @@ h2 {
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-form {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-form input, form select, form textarea {
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-form button {
-    background-color: #6200ea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-form button:hover {
-    background-color: #3700b3;
 }
 
 @media (max-width: 768px) {
@@ -545,4 +497,108 @@ form button:hover {
 .like-btn.liked {
     transform: scale(1.2);
     color: red;
+}
+
+#settingsSection {
+    display: none; 
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+#profileSection {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#profileSection h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #6200ea;
+}
+
+#profileSection p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#profileSection strong {
+    color: #333;
+}
+
+#profileSection textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#editProfileBtn {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#editProfileBtn:hover {
+    background-color: #3700b3;
+}
+
+#createSection, #settingsSection {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#createSection h2, #settingsSection h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #6200ea;
+}
+
+#createSection form, #settingsSection form {
+    display: flex;
+    flex-direction: column;
+}
+
+#createSection input, #settingsSection input, 
+#createSection textarea, #settingsSection select {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#createSection button, #settingsSection button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#createSection button:hover, #settingsSection button:hover {
+    background-color: #3700b3;
+}
+
+#themeColor {
+    width: 100px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
 }
