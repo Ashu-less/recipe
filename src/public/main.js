@@ -108,7 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert("Comment cannot be empty!");
                     return;
                 }
+
                 const user_id = sessionStorage.getItem('user_id');
+                console.log('User ID:', user_id);
                 if (!user_id) {
                     alert("You must be logged in to comment.");
                     return;
@@ -149,8 +151,12 @@ function handleSignin(event) {
             },
             body: JSON.stringify({ username, password })
         })
-        .then(response => {
-            if (response.ok) {
+        .then(response => response.json())
+        .then(data => {
+            console.log('Sign-in response:', data); // Debugging log
+            if (data.message) {
+                sessionStorage.setItem('user_id', data.userId); // Store user_id
+                console.log('User ID saved in sessionStorage:', data.userId); // Debugging log
                 document.getElementById("auth-section").style.display = "none";
                 document.getElementById("navbar").style.display = "flex";
                 document.getElementById("homepageSection").style.display = "flex";

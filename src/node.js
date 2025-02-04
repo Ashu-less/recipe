@@ -132,12 +132,13 @@ app.post('/like/:recipeId', (req, res) => {
 
 app.post('/comment/:recipeId', (req, res) => {
     const recipeId = req.params.recipeId;
-    //user ID is a must here, wihtout that we cannot run this-> for any futre bugs
     const { user_id, comment_text } = req.body;
 
     if (!user_id || !comment_text) {
         return res.status(400).json({ error: 'User ID and comment text are required' });
     }
+
+    console.log('Received comment:', { recipeId, user_id, comment_text });
 
     const sql = 'INSERT INTO comments (recipe_id, user_id, comment) VALUES (?, ?, ?)';
     db.query(sql, [recipeId, user_id, comment_text], (err, result) => {
@@ -159,7 +160,7 @@ app.get('/comments/:recipeId', (req, res) => {
     const sql = `
         SELECT c.comment_id, c.comment, c.created_at, u.username 
         FROM comments c
-        JOIN users u ON c.user_id = u.id
+        JOIN users u ON c.user_id = u.user_id
         WHERE c.recipe_id = ?
         ORDER BY c.created_at DESC
     `;
