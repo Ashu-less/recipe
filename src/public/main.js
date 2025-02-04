@@ -40,20 +40,56 @@ document.addEventListener('DOMContentLoaded', function() {
         setActiveButton("settingsBtn");
     });
 
-    const likeButtons = document.querySelectorAll('.like-btn');
-    likeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const likeCountElement = this.parentElement.querySelector('.likes');
-            let currentLikes = parseInt(likeCountElement.textContent);
-            currentLikes++;
-            likeCountElement.textContent = currentLikes;
+    fetch('/recipes')
+        .then(response => response.json())
+        .then(recipes => {
+            const recipeContainer = document.getElementById('recipeContainer');
+            if(!recipeContainer)
+            {
+                console.error('Error: This recipeContainer isnt found');
+                return; 
 
-            this.classList.add('liked');
-            setTimeout(() => {
-                this.classList.remove('liked');
-            }, 300);
-        });
-    });
+            }
+            recipeContainer.innerHTML = ''; 
+            recipes.forEach(recipe => {
+                const recipeCard = document.createElement('div');
+                recipeCard.className = 'recipe-card';
+                recipeCard.innerHTML = `
+                    <div class="icon"><img src="/images/${encodeURIComponent(recipe.dishName)}.jpg" alt="${recipe.dishName}"></div>
+                    <h3>${recipe.dishName}</h3>
+                    <div class="actions">
+                        <span class="like-count">❤️ <span class="likes" data-recipe-id="${recipe.recipe_id}">${recipe.likes}</span> Likes</span>
+                        <span>💬 45 Comments</span>
+                        <button class="like-btn" data-recipe-id="${recipe.recipe_id}">❤️</button>
+                    </div>
+                `;
+                recipeContainer.appendChild(recipeCard);
+            });
+
+
+            document.querySelectorAll('.like-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recipeId = this.getAttribute('data-recipe-id');
+                    fetch(`/like/${recipeId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            let likeCountElement = document.querySelector(`.likes[data-recipe-id='${recipeId}']`);
+                            if (likeCountElement) {
+                                likeCountElement.textContent = data.likes;
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+        })
+        .catch(error => console.error('Error fetching recipes:', error));
 });
 
 function handleSignin(event) {
@@ -317,3 +353,31 @@ document.getElementById('settingsForm').addEventListener('submit', function(even
     })
     .catch(error => console.error('Error:', error));
 });
+
+document.getElementById("signOutBtn").addEventListener("click", function() {
+    signOut();
+});
+
+function signOut() {
+    fetch('/signout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            document.getElementById("navbar").style.display = "none";
+            document.getElementById("auth-section").style.display = "block";
+            document.getElementById("homepageSection").style.display = "none";
+            document.getElementById("suggestedSection").style.display = "none";
+            document.getElementById("createSection").style.display = "none";
+            document.getElementById("profileSection").style.display = "none";
+            document.getElementById("settingsSection").style.display = "none";
+        } else {
+            alert('Error signing out');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+

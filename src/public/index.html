@@ -37,80 +37,86 @@
         </div>
     </div>
 
-    <div id="navbar">
+    <div id="navbar" style="display: none;">
         <button id="homeBtn" class="nav-button active">🏠 Home</button>
         <button id="suggestedBtn" class="nav-button">⭐ Suggested</button>
         <button id="createBtn" class="nav-button">✏️ Create</button>
         <button id="profileBtn" class="nav-button">👤 Profile</button>
         <button id="settingsBtn" class="nav-button">⚙ Settings</button>
+        <button id="signOutBtn" class="nav-button">Sign Out</button>
     </div>
 
     <div id="homepageSection" class="container" style="display: none;">
-        <div class="recipe-grid">
-            <div class="recipe-card">
+        <div id = "recipeContainer" class="recipe-grid">
+            <div class="recipe-card" data-recipe-id="2">
                 <div class="icon">
-                    <img src = "\images\Classic Spaghetti Carbonara.jpg">
-                    🍝</div>
+                    <img src="\images\Classic Spaghetti Carbonara.jpg" alt="Classic Spaghetti Carbonara">
+                    🍝
+                </div>
                 <h3>Classic Spaghetti Carbonara</h3>
                 <div class="actions">
-                    <span class="like-count">❤️ <span class="likes">234</span> Likes</span>
+                    <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
                     <span>💬 45 Comments</span>
                     <button class="like-btn">❤️</button>
                 </div>
             </div>
-            <div class="recipe-card">
+            <div class="recipe-card" data-recipe-id="1">
                 <div class="icon">
-                    <img src = "\images\Southern Crispy Fried Chicken.jpg">
-                    🍗</div>
-                <h3>Southern Crispy Fried Chicken</h3>
-                <div class="actions">
-                    <span class="like-count">❤️ <span class="likes">312</span> Likes</span>
-                    <span>💬 67 Comments</span>
-                    <button class="like-btn">❤️</button>
+                    <img src="\images\Authentic Margherita Pizza.jpg" alt="Authentic Margherita Pizza">
+                    🍕
                 </div>
-            </div>
-            <div class="recipe-card">
-                <div class="icon">
-                    <img src = "\images\Healthy Buddha Bowl.jpg">
-                    🥗</div>
-                <h3>Healthy Buddha Bowl</h3>
-                <div class="actions">
-                    <span class="like-count">❤️ <span class="likes">189</span> Likes</span>
-                    <span>💬 28 Comments</span>
-                    <button class="like-btn">❤️</button>
-                </div>
-            </div>
-            <div class="recipe-card">
-                <div class="icon">
-                    <img src = "\images\Lemon Herb Grilled Salmon.jpg">
-                    🐟</div>
-                <h3>Lemon Herb Grilled Salmon</h3>
-                <div class="actions">
-                    <span class="like-count">❤️ <span class="likes">276</span> Likes</span>
-                    <span>💬 52 Comments</span>
-                    <button class="like-btn">❤️</button>
-                </div>
-            </div>
-            <div class="recipe-card">
-                <div class="icon">
-                    <img src = "\images\Authentic Margherita Pizza.jpg">
-                    🍕</div>
-                
                 <h3>Authentic Margherita Pizza</h3>
                 <div class="actions">
-                    <span class="like-count">❤️ <span class="likes">425</span> Likes</span>
-                    <span>💬 89 Comments</span>
+                    <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+                    <span>💬 30 Comments</span>
                     <button class="like-btn">❤️</button>
                 </div>
             </div>
-            <div class="recipe-card">
+            <div class="recipe-card" data-recipe-id="3">
                 <div class="icon">
-                    <img src = "\images\Double Chocolate Layer Cake.jpg">
-                    🍰</div>
+                    <img src="\images\Double Chocolate Layer Cake.jpg" alt="Double Chocolate Layer Cake">
+                    🍰
+                </div>
                 <h3>Double Chocolate Layer Cake</h3>
                 <div class="actions">
-                    <span class="like-count">❤️ <span class="likes">367</span> Likes</span>
-                    <span>💬 73 Comments</span>
+                    <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+                    <span>💬 20 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card" data-recipe-id="4">
+                <div class="icon">
+                    <img src="\images\Healthy Buddha Bowl.jpg" alt="Healthy Buddha Bowl">
+                    🥗
+                </div>
+                <h3>Healthy Buddha Bowl</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+                    <span>💬 15 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card" data-recipe-id="5">
+                <div class="icon">
+                    <img src="\images\Lemon Herb Grilled Salmon.jpg" alt="Lemon Herb Grilled Salmon">
+                    🐟
+                </div>
+                <h3>Lemon Herb Grilled Salmon</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+                    <span>💬 10 Comments</span>
+                    <button class="like-btn">❤️</button>
+                </div>
+            </div>
+            <div class="recipe-card" data-recipe-id="6">
+                <div class="icon">
+                    <img src="\images\Southern Crispy Fried Chicken.jpg" alt="Southern Crispy Fried Chicken">
+                    🍗
+                </div>
+                <h3>Southern Crispy Fried Chicken</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+                    <span>💬 25 Comments</span>
                     <button class="like-btn">❤️</button>
                 </div>
             </div>

@@ -94,43 +94,57 @@ app.post('/signin', (req, res) => {
     });
 });
 
-/*
-const createTableSQL = `
-CREATE TABLE IF NOT EXISTS likes_comments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    recipe_id INT NOT NULL,
-    user_id INT NOT NULL,
-    is_liked BOOLEAN,
-    comment TEXT,
-    FOREIGN KEY (recipe_id) REFERENCES recipes(id)
-);
-`;
-
-db.query(createTableSQL, (err) => {
-    if (err) throw err;
-});
-
-
-app.post('/like', (req, res) => {
-    const { recipe_id, user_id } = req.body;
-    const sql = 'INSERT INTO likes_comments (recipe_id, user_id, is_liked) VALUES (?, ?, ?)';
-    db.query(sql, [recipe_id, user_id, true], (err, result) => {
-        if (err) return res.status(500).json({ error: 'Database error' });
-        res.status(200).json({ message: 'Like added' });
+app.post('/signout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send('Could not log out.');
+        }
+        res.sendStatus(200);
     });
 });
 
+app.post('/like/:recipeId', (req, res) => {
+    const recipeId = req.params.recipeId;
+    console.log('Recipe ID:', recipeId);
+    const sql = 'UPDATE recipes SET likes = likes + 1 WHERE recipe_id = ?';
 
-app.post('/comment', (req, res) => {
-    const { recipe_id, user_id, comment } = req.body;
-    const sql = 'INSERT INTO likes_comments (recipe_id, user_id, comment) VALUES (?, ?, ?)';
-    db.query(sql, [recipe_id, user_id, comment], (err, result) => {
-        if (err) return res.status(500).json({ error: 'Database error' });
-        res.status(200).json({ message: 'Comment added' });
+    db.query(sql, [recipeId], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Error updating likes' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Recipe not found' });
+        }
+        db.query('SELECT likes FROM recipes WHERE recipe_id = ?', [recipeId], (err, rows) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({ error: 'Error fetching updated likes' });
+            }
+
+            res.status(200).json({ 
+                message: 'Like added successfully', 
+                likes: rows[0].likes 
+            });
+
+        res.status(200).json({ message: 'Like added successfully' });
     });
 });
-*/
+
+});
+
+app.get('/recipes', (req, res) => {
+    const sql = 'SELECT recipe_id, dishName, steps, dishType, likes FROM recipes';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error fetching recipes' });
+        }
+        res.json(results);
+    });
+});
 
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');
 });
+
+
