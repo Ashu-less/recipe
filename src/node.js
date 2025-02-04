@@ -126,12 +126,54 @@ app.post('/like/:recipeId', (req, res) => {
                 message: 'Like added successfully', 
                 likes: rows[0].likes 
             });
-
-        res.status(200).json({ message: 'Like added successfully' });
+        });
     });
 });
 
+app.post('/comment/:recipeId', (req, res) => {
+    const recipeId = req.params.recipeId;
+    //user ID is a must here, wihtout that we cannot run this-> for any futre bugs
+    const { user_id, comment_text } = req.body;
+
+    if (!user_id || !comment_text) {
+        return res.status(400).json({ error: 'User ID and comment text are required' });
+    }
+
+    const sql = 'INSERT INTO comments (recipe_id, user_id, comment) VALUES (?, ?, ?)';
+    db.query(sql, [recipeId, user_id, comment_text], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Error saving comment' });
+        }
+
+        res.status(201).json({
+            message: 'Comment added successfully',
+            comment_id: result.insertId,
+        });
+    });
 });
+
+app.get('/comments/:recipeId', (req, res) => {
+    const recipeId = req.params.recipeId;
+
+    const sql = `
+        SELECT c.comment_id, c.comment, c.created_at, u.username 
+        FROM comments c
+        JOIN users u ON c.user_id = u.id
+        WHERE c.recipe_id = ?
+        ORDER BY c.created_at DESC
+    `;
+
+    db.query(sql, [recipeId], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Error fetching comments' });
+        }
+
+        res.json(results);
+    });
+});
+
 
 app.get('/recipes', (req, res) => {
     const sql = 'SELECT recipe_id, dishName, steps, dishType, likes FROM recipes';

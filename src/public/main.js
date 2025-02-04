@@ -41,39 +41,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     fetch('/recipes')
-        .then(response => response.json())
-        .then(recipes => {
-            const recipeContainer = document.getElementById('recipeContainer');
-            if(!recipeContainer)
-            {
-                console.error('Error: This recipeContainer isnt found');
-                return; 
+    .then(response => response.json())
+    .then(recipes => {
+        const recipeContainer = document.getElementById('recipeContainer');
+        if (!recipeContainer) {
+            console.error('Error: recipeContainer not found');
+            return;
+        }
+        recipeContainer.innerHTML = '';
 
-            }
-            recipeContainer.innerHTML = ''; 
-            recipes.forEach(recipe => {
-                const recipeCard = document.createElement('div');
-                recipeCard.className = 'recipe-card';
-                recipeCard.innerHTML = `
-                    <div class="icon"><img src="/images/${encodeURIComponent(recipe.dishName)}.jpg" alt="${recipe.dishName}"></div>
-                    <h3>${recipe.dishName}</h3>
-                    <div class="actions">
-                        <span class="like-count">❤️ <span class="likes" data-recipe-id="${recipe.recipe_id}">${recipe.likes}</span> Likes</span>
-                        <span>💬 45 Comments</span>
-                        <button class="like-btn" data-recipe-id="${recipe.recipe_id}">❤️</button>
-                    </div>
-                `;
-                recipeContainer.appendChild(recipeCard);
-            });
+        recipes.forEach(recipe => {
+            const recipeCard = document.createElement('div');
+            recipeCard.className = 'recipe-card';
+            recipeCard.innerHTML = `
+                <div class="icon"><img src="/images/${encodeURIComponent(recipe.dishName)}.jpg" alt="${recipe.dishName}"></div>
+                <h3>${recipe.dishName}</h3>
+                <div class="actions">
+                    <span class="like-count">❤️ <span class="likes" data-recipe-id="${recipe.recipe_id}">${recipe.likes}</span> Likes</span>
+                    <button class="like-btn" data-recipe-id="${recipe.recipe_id}">❤️ Like</button>
+                </div>
+                <div class="comments-section">
+                    <h4>Comments:</h4>
+                    <div class="comments-container" id="comments-${recipe.recipe_id}"></div>
+                    <input type="text" id="comment-input-${recipe.recipe_id}" placeholder="Add a comment..." />
+                    <button class="comment-btn" data-recipe-id="${recipe.recipe_id}">💬 Comment</button>
+                </div>
+            `;
+            recipeContainer.appendChild(recipeCard);
 
+            // comments are loaded here 
+            loadComments(recipe.recipe_id);
+        });
 
-            document.querySelectorAll('.like-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const recipeId = this.getAttribute('data-recipe-id');
-                    fetch(`/like/${recipeId}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                    })
+        // liking the recipes
+        document.querySelectorAll('.like-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const recipeId = this.getAttribute('data-recipe-id');
+
+                fetch(`/like/${recipeId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
@@ -86,10 +94,46 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     })
                     .catch(error => console.error('Error:', error));
-                });
             });
-        })
-        .catch(error => console.error('Error fetching recipes:', error));
+        });
+
+        // sumbitting comments section
+        document.querySelectorAll('.comment-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const recipeId = this.getAttribute('data-recipe-id');
+                const commentInput = document.getElementById(`comment-input-${recipeId}`);
+                const commentText = commentInput.value.trim();
+
+                if (!commentText) {
+                    alert("Comment cannot be empty!");
+                    return;
+                }
+                const user_id = sessionStorage.getItem('user_id');
+                if (!user_id) {
+                    alert("You must be logged in to comment.");
+                    return;
+                }
+
+                fetch(`/comment/${recipeId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id, comment_text: commentText })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            commentInput.value = ''; 
+                            loadComments(recipeId); 
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    })
+    .catch(error => console.error('Error fetching recipes:', error));
+
 });
 
 function handleSignin(event) {
@@ -290,6 +334,24 @@ $(function() {
         .catch(error => console.error('Error loading suggested recipes:', error));
   }
 
+  function loadComments(recipeId) {
+    fetch(`/comments/${recipeId}`)
+        .then(response => response.json())
+        .then(comments => {
+            const commentsContainer = document.getElementById(`comments-${recipeId}`);
+            if (!commentsContainer) return;
+
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `<strong>${comment.username}</strong>: ${comment.comment}`;
+                commentsContainer.appendChild(commentElement);
+            });
+        })
+        .catch(error => console.error('Error fetching comments:', error));
+}
+
   document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -380,4 +442,5 @@ function signOut() {
     })
     .catch(error => console.error('Error:', error));
 }
+
 
