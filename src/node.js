@@ -81,13 +81,20 @@ app.post('/signup', async (req, res) => {
 app.post('/signin', (req, res) => {
     const { username, password } = req.body;
     
-    const sql = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    console.log('Attempting to sign in with:', { username, password });
+
+    const sql = 'SELECT user_id, username FROM users WHERE username = ? AND password = ?';
+    console.log('SQL:', sql, 'Params:', [username, password]);
+
     db.query(sql, [username, password], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Database error' });
         }
         if (result.length > 0) {
-            res.status(200).json({ message: 'Login successful' });
+            res.status(200).json({ 
+                message: 'Login successful', 
+                userId: result[0].user_id
+            });
         } else {
             res.status(401).json({ error: 'Invalid credentials' });
         }
