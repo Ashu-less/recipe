@@ -81,13 +81,20 @@ app.post('/signup', async (req, res) => {
 app.post('/signin', (req, res) => {
     const { username, password } = req.body;
     
-    const sql = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    console.log('Attempting to sign in with:', { username, password });
+
+    const sql = 'SELECT user_id, username FROM users WHERE username = ? AND password = ?';
+    console.log('SQL:', sql, 'Params:', [username, password]);
+
     db.query(sql, [username, password], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Database error' });
         }
         if (result.length > 0) {
-            res.status(200).json({ message: 'Login successful' });
+            res.status(200).json({ 
+                message: 'Login successful', 
+                userId: result[0].user_id
+            });
         } else {
             res.status(401).json({ error: 'Invalid credentials' });
         }
@@ -126,12 +133,55 @@ app.post('/like/:recipeId', (req, res) => {
                 message: 'Like added successfully', 
                 likes: rows[0].likes 
             });
-
-        res.status(200).json({ message: 'Like added successfully' });
+        });
     });
 });
 
+app.post('/comment/:recipeId', (req, res) => {
+    const recipeId = req.params.recipeId;
+    const { user_id, comment_text } = req.body;
+
+    if (!user_id || !comment_text) {
+        return res.status(400).json({ error: 'User ID and comment text are required' });
+    }
+
+    console.log('Received comment:', { recipeId, user_id, comment_text });
+
+    const sql = 'INSERT INTO comments (recipe_id, user_id, comment) VALUES (?, ?, ?)';
+    db.query(sql, [recipeId, user_id, comment_text], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Error saving comment' });
+        }
+
+        res.status(201).json({
+            message: 'Comment added successfully',
+            comment_id: result.insertId,
+        });
+    });
 });
+
+app.get('/comments/:recipeId', (req, res) => {
+    const recipeId = req.params.recipeId;
+
+    const sql = `
+        SELECT c.comment_id, c.comment, c.created_at, u.username 
+        FROM comments c
+        JOIN users u ON c.user_id = u.user_id
+        WHERE c.recipe_id = ?
+        ORDER BY c.created_at DESC
+    `;
+
+    db.query(sql, [recipeId], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Error fetching comments' });
+        }
+
+        res.json(results);
+    });
+});
+
 
 app.get('/recipes', (req, res) => {
     const sql = 'SELECT recipe_id, dishName, steps, dishType, likes FROM recipes';
