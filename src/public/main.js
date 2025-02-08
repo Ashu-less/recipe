@@ -25,9 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
         setActiveButton("suggestedBtn");
     });
 
-    document.getElementById("createBtn").addEventListener("click", function() {
-        showSection("createSection");
-        setActiveButton("createBtn");
+    document.getElementById("createBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        document.getElementById('createSection').style.display = 'block';
+        document.getElementById('homepageSection').style.display = 'none';
     });
 
     document.getElementById("profileBtn").addEventListener("click", function() {
@@ -361,27 +362,26 @@ $(function() {
   document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const recipeName = document.getElementById('recipeName').value;
-    const recipeIngredients = document.getElementById('recipeIngredients').value;
-    const recipeSteps = document.getElementById('recipeSteps').value;
-    const recipeImage = document.getElementById('recipeImage').files[0];
-
     const formData = new FormData();
-    formData.append('name', recipeName);
-    formData.append('ingredients', recipeIngredients);
-    formData.append('steps', recipeSteps);
-    formData.append('image', recipeImage);
+    formData.append('dishName', document.getElementById('recipeName').value);
+    formData.append('steps', document.getElementById('recipeSteps').value);
+    formData.append('dishType', document.getElementById('dishType').value);
+    
+    if (document.getElementById('recipeImage').files[0]) {
+        formData.append('recipeImage', document.getElementById('recipeImage').files[0]);
+    }
 
-    fetch('/createRecipe', {
+    fetch('/create-recipe', {
         method: 'POST',
         body: formData
     })
-    .then(response => {
-        if (response.ok) {
-            alert('Recipe created successfully!');
-            window.location.reload();  
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
         } else {
-            alert('Failed to create recipe.');
+            alert('Recipe created successfully!');
+            document.getElementById('createRecipeForm').reset();
         }
     })
     .catch(error => console.error('Error:', error));

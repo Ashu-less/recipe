@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 const port = 8000; 
@@ -182,7 +183,6 @@ app.get('/comments/:recipeId', (req, res) => {
     });
 });
 
-
 app.get('/recipes', (req, res) => {
     const sql = 'SELECT recipe_id, dishName, steps, dishType, likes FROM recipes';
     db.query(sql, (err, results) => {
@@ -190,6 +190,46 @@ app.get('/recipes', (req, res) => {
             return res.status(500).json({ error: 'Error fetching recipes' });
         }
         res.json(results);
+    });
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); 
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// Create Recipe Endpoint
+app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
+    const { dishName, steps, dishType } = req.body;
+    let imagePath = null;
+
+    if (req.file) {
+        imagePath = req.file.path;
+    }
+
+    console.log('Received recipe data:', { dishName, steps, dishType, imagePath });
+
+    const sql = 'INSERT INTO recipes (dishName, steps, dishType, likes) VALUES (?, ?, ?, ?)';
+    const values = [dishName, steps, dishType, 0];
+
+    db.query(sql, values, (err, result) => {
+        console.log("recipes recieved to db");
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Error saving recipe' });
+        } else {
+            res.status(201).json({
+                message: 'Recipe created successfully',
+                recipeId: result.insertId,
+                imagePath: imagePath
+            });
+        }
     });
 });
 
