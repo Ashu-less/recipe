@@ -25,11 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
         setActiveButton("suggestedBtn");
     });
 
-    document.getElementById("createBtn").addEventListener("click", function(event) {
-        event.preventDefault();
-        document.getElementById('createSection').style.display = 'block';
-        document.getElementById('homepageSection').style.display = 'none';
+    document.getElementById("createBtn").addEventListener("click", function() {
+        showSection("createSection");
+        setActiveButton("createBtn");
     });
+    
 
     document.getElementById("profileBtn").addEventListener("click", function() {
         showSection("profileSection");
@@ -359,9 +359,12 @@ $(function() {
         .catch(error => console.error('Error fetching comments:', error));
 }
 
-  document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+function showCreateRecipeSection() {
+    document.getElementById('createSection').style.display = 'block';
+    document.getElementById('homepageSection').style.display = 'none';
+}
 
+function createRecipe() {
     const formData = new FormData();
     formData.append('dishName', document.getElementById('recipeName').value);
     formData.append('steps', document.getElementById('recipeSteps').value);
@@ -382,9 +385,21 @@ $(function() {
         } else {
             alert('Recipe created successfully!');
             document.getElementById('createRecipeForm').reset();
+            document.getElementById('createSection').style.display = 'none';
+            document.getElementById('homepageSection').style.display = 'block';
         }
     })
     .catch(error => console.error('Error:', error));
+}
+
+document.getElementById('createBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    showCreateRecipeSection();
+});
+
+document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    createRecipe();
 });
 
 document.getElementById('togglePassword').addEventListener('click', function() {

@@ -10,6 +10,7 @@ const app = express();
 const port = 8000; 
 
 app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -195,7 +196,7 @@ app.get('/recipes', (req, res) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, 'images/');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname)); 
@@ -207,11 +208,11 @@ const upload = multer({ storage: storage });
 // Create Recipe Endpoint
 app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
     const { dishName, steps, dishType } = req.body;
-    let imagePath = null;
 
     if (req.file) {
-        imagePath = req.file.path;
+        imagePath = `/uploads/${req.file.filename}`; 
     }
+    
 
     console.log('Received recipe data:', { dishName, steps, dishType, imagePath });
 
