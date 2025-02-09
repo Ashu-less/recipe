@@ -270,11 +270,9 @@ body {
     color: #6200ea;
     cursor: pointer;
     font-size: 24px;
-    transition: transform 0.2s;
 }
 
 .like-btn.liked {
-    transform: scale(1.2);
     color: red;
 }
 
@@ -495,11 +493,9 @@ h2 {
     color: #6200ea;
     cursor: pointer;
     font-size: 24px;
-    transition: transform 0.2s;
 }
 
 .like-btn.liked {
-    transform: scale(1.2);
     color: red;
 }
 

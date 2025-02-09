@@ -96,23 +96,31 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.like-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const recipeId = this.getAttribute('data-recipe-id');
+                const isLiked = this.classList.toggle('liked');
+                const userId = sessionStorage.getItem('user_id');
 
                 fetch(`/like/${recipeId}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId })
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => {
                             alert(data.error);
-                        } else {
-                            let likeCountElement = document.querySelector(`.likes[data-recipe-id='${recipeId}']`);
-                            if (likeCountElement) {
-                                likeCountElement.textContent = data.likes;
-                            }
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    let likeCountElement = document.querySelector(`.likes[data-recipe-id='${recipeId}']`);
+                    if (data.likes !== undefined) {
+                        likeCountElement.textContent = data.likes;
+                    } else {
+                        likeCountElement.textContent = 'Likes';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
             });
         });
 

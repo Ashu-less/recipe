@@ -116,28 +116,55 @@ app.post('/signout', (req, res) => {
 
 app.post('/like/:recipeId', (req, res) => {
     const recipeId = req.params.recipeId;
-    console.log('Recipe ID:', recipeId);
-    const sql = 'UPDATE recipes SET likes = likes + 1 WHERE recipe_id = ?';
+    const userId = req.body.user_id;
 
-    db.query(sql, [recipeId], (err, result) => {
+    const checkLikeSql = 'SELECT * FROM likes WHERE recipe_id = ? AND user_id = ?';
+    db.query(checkLikeSql, [recipeId, userId], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Error updating likes' });
+            return res.status(500).json({ error: 'Error checking like status' });
         }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Recipe not found' });
-        }
-        db.query('SELECT likes FROM recipes WHERE recipe_id = ?', [recipeId], (err, rows) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ error: 'Error fetching updated likes' });
-            }
 
-            res.status(200).json({ 
-                message: 'Like added successfully', 
-                likes: rows[0].likes 
+        if (results.length > 0) {
+            const deleteLikeSql = 'DELETE FROM likes WHERE recipe_id = ? AND user_id = ?';
+            db.query(deleteLikeSql, [recipeId, userId], (err) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Error removing like' });
+                }
+                const decrementLikeSql = 'UPDATE recipes SET likes = likes - 1 WHERE recipe_id = ?';
+                db.query(decrementLikeSql, [recipeId], (err) => {
+                    if (err) {
+                        return res.status(500).json({ error: 'Error updating likes' });
+                    }
+                    const updatedLikesSql = 'SELECT likes FROM recipes WHERE recipe_id = ?';
+                    db.query(updatedLikesSql, [recipeId], (err, results) => {
+                        if (err) {
+                            return res.status(500).json({ error: 'Error fetching updated likes' });
+                        }
+                        return res.status(200).json({ message: 'Like removed successfully', likes: results[0].likes });
+                    });
+                });
             });
-        });
+        } else {
+            const insertLikeSql = 'INSERT INTO likes (recipe_id, user_id) VALUES (?, ?)';
+            db.query(insertLikeSql, [recipeId, userId], (err) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Error adding like' });
+                }
+                const incrementLikeSql = 'UPDATE recipes SET likes = likes + 1 WHERE recipe_id = ?';
+                db.query(incrementLikeSql, [recipeId], (err) => {
+                    if (err) {
+                        return res.status(500).json({ error: 'Error updating likes' });
+                    }
+                    const updatedLikesSql = 'SELECT likes FROM recipes WHERE recipe_id = ?';
+                    db.query(updatedLikesSql, [recipeId], (err, results) => {
+                        if (err) {
+                            return res.status(500).json({ error: 'Error fetching updated likes' });
+                        }
+                        return res.status(200).json({ message: 'Like added successfully', likes: results[0].likes });
+                    });
+                });
+            });
+        }
     });
 });
 
