@@ -278,6 +278,10 @@ body {
     color: red;
 }
 
+.like-btn:not(.liked) {
+    color: grey;
+}
+
 .heart:before {
     display: block;
     position: absolute;
