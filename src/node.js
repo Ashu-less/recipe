@@ -205,9 +205,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Create Recipe Endpoint
 app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
     const { dishName, steps, dishType } = req.body;
+    let imagePath = null; 
 
     if (req.file) {
         imagePath = `/uploads/${req.file.filename}`; 

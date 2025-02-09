@@ -2,16 +2,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const signInForm = document.getElementById('signInForm');
     const signUpForm = document.getElementById('signUpForm');
     const navbar = document.getElementById('navbar');
+    const createRecipeForm = document.getElementById('createRecipeForm');
+    const settingsForm = document.getElementById('settingsForm');
 
     if (signInForm) {
         signInForm.addEventListener('submit', function(event) {
+            event.preventDefault();
             handleSignin(event);
         });
     }
 
     if (signUpForm) {
         signUpForm.addEventListener('submit', function(event) {
+            event.preventDefault();
             handleSignup(event);
+        });
+    }
+
+    if (createRecipeForm) {
+        createRecipeForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            createRecipe();
+        });
+    }
+
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Add your settings save logic here
         });
     }
 
@@ -399,7 +417,31 @@ document.getElementById('createBtn').addEventListener('click', function(event) {
 
 document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    createRecipe();
+
+    const formData = new FormData();
+    formData.append('dishName', document.getElementById('recipeName').value);
+    formData.append('steps', document.getElementById('recipeSteps').value);
+    formData.append('dishType', document.getElementById('dishType').value);
+    
+    if (document.getElementById('recipeImage').files[0]) {
+        formData.append('recipeImage', document.getElementById('recipeImage').files[0]);
+    }
+
+    fetch('/create-recipe', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert('Recipe created successfully!');
+            document.getElementById('createRecipeForm').reset();
+            addRecipeToHomepage(data.recipeId, data.message, data.imagePath);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 });
 
 document.getElementById('togglePassword').addEventListener('click', function() {
