@@ -405,9 +405,31 @@ function createRecipe() {
             document.getElementById('createRecipeForm').reset();
             document.getElementById('createSection').style.display = 'none';
             document.getElementById('homepageSection').style.display = 'block';
+            console.log(`Loading image from path: /images/${data.imagePath}`);
         }
     })
     .catch(error => console.error('Error:', error));
+}
+
+function addRecipeToHomepage(recipeId, dishName, imagePath) {
+    const recipeContainer = document.getElementById('recipeContainer');
+    const recipeCard = document.createElement('div');
+    recipeCard.className = 'recipe-card';
+    recipeCard.setAttribute('data-recipe-id', recipeId);
+    
+    recipeCard.innerHTML = `
+        <div class="icon">
+            <img src="/images/${imagePath}" alt="${dishName}">
+            <h3>${dishName}</h3>
+        </div>
+        <div class="actions">
+            <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+            <span>💬 0 Comments</span>
+            <button class="like-btn" data-recipe-id="${recipeId}">❤️ Like</button>
+        </div>
+    `;
+    
+    recipeContainer.appendChild(recipeCard);
 }
 
 document.getElementById('createBtn').addEventListener('click', function(event) {
@@ -439,6 +461,7 @@ document.getElementById('createRecipeForm').addEventListener('submit', function(
             alert('Recipe created successfully!');
             document.getElementById('createRecipeForm').reset();
             addRecipeToHomepage(data.recipeId, data.message, data.imagePath);
+            console.log(`Loading image from path: /images/${data.imagePath}`);
         }
     })
     .catch(error => console.error('Error:', error));

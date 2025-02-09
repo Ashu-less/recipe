@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
+const session = require('express-session');
 
 const app = express();
 const port = 8000; 
@@ -196,10 +198,12 @@ app.get('/recipes', (req, res) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images/');
+        cb(null, path.join(__dirname, 'public/images/'));
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); 
+        let dishName = req.body.dishName.replace(/[^a-zA-Z0-9]/g, "_"); 
+        let fileExt = path.extname(file.originalname);
+        cb(null, dishName + fileExt);
     }
 });
 
@@ -207,10 +211,19 @@ const upload = multer({ storage: storage });
 
 app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
     const { dishName, steps, dishType } = req.body;
-    let imagePath = null; 
+    let imagePath = null;
 
     if (req.file) {
-        imagePath = `/uploads/${req.file.filename}`; 
+        const tempPath = req.file.path;
+        imagePath = `/images/${req.file.filename}`;
+
+        const targetPath = path.join(__dirname, 'public/images', req.file.filename);
+        fs.rename(tempPath, targetPath, (err) => {
+            if (err) {
+                console.error('Error moving file:', err);
+                return res.status(500).json({ error: 'Error saving image' });
+            }
+        });
     }
     
 
@@ -224,13 +237,14 @@ app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
         if (err) {
             console.error('Database error:', err);
             return res.status(500).json({ error: 'Error saving recipe' });
-        } else {
-            res.status(201).json({
-                message: 'Recipe created successfully',
-                recipeId: result.insertId,
-                imagePath: imagePath
-            });
         }
+
+        res.status(201).json({
+            message: 'Recipe created successfully',
+            recipeId: result.insertId,
+            dishName: dishName,
+            imagePath: imagePath
+        });
     });
 });
 
