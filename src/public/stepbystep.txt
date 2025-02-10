@@ -1,7 +1,10 @@
-1. Likes and comments-> real time
-2. Side link pages (front end) profile,setting, suggested, create DONE
-3.  images get inserted and more foods DONE
+1. Having an image uploaded in my create and being functional, hits the database, makes a new recipe (fully working)-> shows up on home page now/ search
+2. 1 like only-> unlike and like visual (grey heart when I have already liked and red heart when liked)
+3. preferences in profile-> working/ editable profile, take data from sign up along with an about me thats editable
 4. sign out feature
-5. fix the sign up being with first name-> later fix tho
+
+
+
+5. fix the sign up being with first name-> later fix tho as its not imp
 
  
