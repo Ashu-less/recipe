@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.like-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const recipeId = this.getAttribute('data-recipe-id');
-                const isLiked = this.classList.toggle('liked');
                 const userId = sessionStorage.getItem('user_id');
 
                 fetch(`/like/${recipeId}`, {
@@ -118,6 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         likeCountElement.textContent = data.likes;
                     } else {
                         likeCountElement.textContent = 'Likes';
+                    }
+
+                    // Toggle the liked class based on the response
+                    if (this.classList.contains('liked')) {
+                        this.classList.remove('liked');
+                    } else {
+                        this.classList.add('liked');
                     }
                 })
                 .catch(error => console.error('Error:', error));
