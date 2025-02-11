@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (settingsForm) {
         settingsForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            // Add your settings save logic here
+            
         });
     }
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const recipeCard = document.createElement('div');
             recipeCard.className = 'recipe-card';
             recipeCard.innerHTML = `
-                <div class="icon"><img src="/images/${encodeURIComponent(recipe.dishName)}.jpg" alt="${recipe.dishName}"></div>
+                <div class="icon"><img src="/images/${recipe.dishName.replace(/\s+/g, ' ')}.jpg" alt="${recipe.dishName}"></div>
                 <h3>${recipe.dishName}</h3>
                 <div class="actions">
                     <span class="like-count">❤️ <span class="likes" data-recipe-id="${recipe.recipe_id}">${recipe.likes}</span> Likes</span>
@@ -186,10 +186,10 @@ function handleSignin(event) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Sign-in response:', data); // Debugging log
+            console.log('Sign-in response:', data); 
             if (data.message) {
                 sessionStorage.setItem('user_id', data.userId); // Store user_id
-                console.log('User ID saved in sessionStorage:', data.userId); // Debugging log
+                console.log('User ID saved in sessionStorage:', data.userId); 
                 document.getElementById("auth-section").style.display = "none";
                 document.getElementById("navbar").style.display = "flex";
                 document.getElementById("homepageSection").style.display = "flex";
@@ -420,6 +420,7 @@ function createRecipe() {
             document.getElementById('createSection').style.display = 'none';
             document.getElementById('homepageSection').style.display = 'block';
             console.log(`Loading image from path: /images/${data.imagePath}`);
+            addRecipeToHomepage(data.recipeId, data.dishName, data.imagePath);
         }
     })
     .catch(error => console.error('Error:', error));
@@ -430,10 +431,10 @@ function addRecipeToHomepage(recipeId, dishName, imagePath) {
     const recipeCard = document.createElement('div');
     recipeCard.className = 'recipe-card';
     recipeCard.setAttribute('data-recipe-id', recipeId);
-    
+
     recipeCard.innerHTML = `
         <div class="icon">
-            <img src="/images/${imagePath}" alt="${dishName}">
+            <img src="/images/${imagePath}?t=${new Date().getTime()}" alt="${dishName}">
             <h3>${dishName}</h3>
         </div>
         <div class="actions">
@@ -442,9 +443,10 @@ function addRecipeToHomepage(recipeId, dishName, imagePath) {
             <button class="like-btn" data-recipe-id="${recipeId}">❤️ Like</button>
         </div>
     `;
-    
-    recipeContainer.appendChild(recipeCard);
+
+    recipeContainer.prepend(recipeCard);
 }
+
 
 document.getElementById('createBtn').addEventListener('click', function(event) {
     event.preventDefault();
@@ -542,5 +544,46 @@ function signOut() {
     })
     .catch(error => console.error('Error:', error));
 }
+
+document.getElementById('updateProfileBtn').addEventListener('click', function () {
+    updateProfile();
+});
+
+function updateProfile() {
+    const userId = sessionStorage.getItem('user_id');
+    if (!userId) {
+        alert("You must be logged in to update your profile.");
+        return;
+    }
+
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const aboutMe = document.getElementById('aboutMe').value.trim();
+
+    if (!username || !email) {
+        alert("Username and email cannot be empty.");
+        return;
+    }
+
+    fetch('/updateProfile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId, username, email, password, about_me: aboutMe })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert("Profile updated successfully!");
+            document.getElementById('profileUsername').textContent = username;
+            document.getElementById('profileEmail').textContent = email;
+            document.getElementById('profileAboutMe').textContent = aboutMe || "No bio available";
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 
 

@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: 'Ashutosh1!',  
+    password: '',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -227,10 +227,9 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, path.join(__dirname, 'public/images/'));
     },
-    filename: (req, file, cb) => {
-        let dishName = req.body.dishName.replace(/[^a-zA-Z0-9]/g, "_"); 
-        let fileExt = path.extname(file.originalname);
-        cb(null, dishName + fileExt);
+    filename: function (req, file, cb) {
+        const dishName = req.body.dishName.trim(); 
+        cb(null, dishName + path.extname(file.originalname)); 
     }
 });
 
@@ -275,16 +274,39 @@ app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
     });
 });
 
-app.post('/profile', async (req, res) => {
-    console.log('profile has been edited');
-    
-         
-        
-    
+
+app.post('/updateProfile', (req, res) => {
+    const userId = req.body.user_id;
+    const { username, email, password, about_me } = req.body;
+
+    const updateUserSql = 'UPDATE users SET username = ?, email = ?, password = ?, about_me = ? WHERE user_id = ?';
+    db.query(updateUserSql, [username, email, password, about_me, userId], (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error updating profile' });
+        }
+        return res.status(200).json({ message: 'Profile updated successfully' });
+    });
+});
+
+app.get('/getUserData', (req, res) => {
+    const userId = req.query.user_id; 
+
+    const getUserSql = 'SELECT username, email, about_me FROM users WHERE user_id = ?';
+    db.query(getUserSql, [userId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error fetching user data' });
+        }
+        if (results.length > 0) {
+            return res.status(200).json(results[0]);
+        } else {
+            return res.status(404).json({ error: 'User not found' });
+        }
+    });
 });
 
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');
 });
+
 
 
