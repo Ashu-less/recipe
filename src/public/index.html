@@ -156,22 +156,27 @@
             <textarea id="recipeSteps" placeholder="Recipe Instructions" required></textarea>
             <input type="text" id="dishType" placeholder="Dish Type" required>
             <input type="file" id="recipeImage" accept="image/*" required>
-            <button type="submit" id="createRecipeBtn">Create Recipe</button>
+            <button type="submit" >Create Recipe</button>
         </form>
     </div>
 
     <div id="profileSection">
-        <h2>My Profile</h2>
-        <p><strong>Username:</strong> <span id="profileUsername"></span></p>
-        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-        <p><strong>About Me:</strong> <span id="profileAboutMe">No bio available</span></p>
-        
         <h3>Edit Profile</h3>
-        <input type="text" id="username" placeholder="New username">
-        <input type="email" id="email" placeholder="New email">
-        <input type="password" id="password" placeholder="New password (optional)">
-        <textarea id="aboutMe" placeholder="Write something about yourself..."></textarea>
-        <button id="updateProfileBtn">Update Profile</button>
+        <form id="profileForm">
+            <label for="username">New Username:</label>
+            <input type="text" id="usernameProfile" name="username" placeholder="New username" required>
+            
+            <label for="email">New Email:</label>
+            <input type="email" id="emailProfile" name="email" placeholder="New email" required>
+    
+            <label for="password">New Password (optional):</label>
+            <input type="password" id="passwordProfile" name="password" placeholder="New password (optional)">
+            
+            <label for="aboutMe">About Me:</label>
+            <textarea id="aboutMe" name="aboutMe" placeholder="Write something about yourself..."></textarea>
+            
+            <button  type="submit" id="updateProfileBtn">Update Profile</button>
+        </form>
     </div>
     
 

@@ -276,23 +276,56 @@ app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
 
 
 app.post('/updateProfile', (req, res) => {
-    const userId = req.body.user_id;
-    const { username, email, password, about_me } = req.body;
+    const { user_id, username, email, password, about_me } = req.body;
 
-    const updateUserSql = 'UPDATE users SET username = ?, email = ?, password = ?, about_me = ? WHERE user_id = ?';
-    db.query(updateUserSql, [username, email, password, about_me, userId], (err) => {
+    if (!user_id) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    let updateFields = [];
+    let values = [];
+
+    if (username) {
+        updateFields.push('username = ?');
+        values.push(username);
+    }
+    if (email) {
+        updateFields.push('email = ?');
+        values.push(email);
+    }
+    if (password) {
+        updateFields.push('password = ?');
+        values.push(password);
+    }
+    if (about_me) {
+        updateFields.push('about_me = ?');
+        values.push(about_me);
+    }
+
+    if (updateFields.length === 0) {
+        return res.status(400).json({ error: 'No valid fields provided to update' });
+    }
+
+    values.push(user_id);
+    const updateUserSql = `UPDATE users SET ${updateFields.join(', ')} WHERE user_id = ?`;
+
+    db.query(updateUserSql, values, (err) => {
         if (err) {
-            return res.status(500).json({ error: 'Error updating profile' });
+            return res.status(500).json({ error: 'Database error' });
         }
-        return res.status(200).json({ message: 'Profile updated successfully' });
+        res.json({ success: true });
     });
 });
 
 app.get('/getUserData', (req, res) => {
-    const userId = req.query.user_id; 
+    const { user_id } = req.query;
+
+    if (!user_id) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
 
     const getUserSql = 'SELECT username, email, about_me FROM users WHERE user_id = ?';
-    db.query(getUserSql, [userId], (err, results) => {
+    db.query(getUserSql, [user_id], (err, results) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching user data' });
         }

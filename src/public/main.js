@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.getElementById('navbar');
     const createRecipeForm = document.getElementById('createRecipeForm');
     const settingsForm = document.getElementById('settingsForm');
+    const profileForm = document.getElementById('profileForm');
 
     if (signInForm) {
         signInForm.addEventListener('submit', function(event) {
@@ -33,6 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    if (profileForm) {
+        profileForm.addEventListener('submit', function(event) {
+            console.log('Form submit triggered');
+            event.preventDefault();
+            updateProfile();
+        });
+    }
+    
+
     document.getElementById("homeBtn").addEventListener("click", function() {
         showSection("homepageSection");
         setActiveButton("homeBtn");
@@ -50,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     document.getElementById("profileBtn").addEventListener("click", function() {
-        showSection("profileSection");
+        showSection("profileSection"); 
         setActiveButton("profileBtn");
     });
 
@@ -273,6 +283,7 @@ document.getElementById("SignUpBtn").addEventListener("click", function () {
     document.getElementById("SignInBtn").classList.remove("active");
 });
 
+
 document.getElementById("signUpForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -395,6 +406,7 @@ function showCreateRecipeSection() {
     document.getElementById('createSection').style.display = 'block';
     document.getElementById('homepageSection').style.display = 'none';
 }
+
 
 function createRecipe() {
     const formData = new FormData();
@@ -545,26 +557,33 @@ function signOut() {
     .catch(error => console.error('Error:', error));
 }
 
-document.getElementById('updateProfileBtn').addEventListener('click', function () {
-    updateProfile();
-});
 
-function updateProfile() {
+function updateProfile()
+{
+    console.log("going through main.js profile")
     const userId = sessionStorage.getItem('user_id');
     if (!userId) {
         alert("You must be logged in to update your profile.");
         return;
     }
 
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const aboutMe = document.getElementById('aboutMe').value.trim();
+    const username = document.getElementById('usernameProfile').value.trim()
+    const email = document.getElementById('emailProfile').value.trim()
+    const password = document.getElementById('passwordProfile').value.trim()
+    const aboutMe = document.getElementById('aboutMe').value.trim()
+    
 
-    if (!username || !email) {
+
+
+   /* if (!username || !email) {
+        console.log("Username:", username);
+    console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("About Me:", aboutMe);
         alert("Username and email cannot be empty.");
+        
         return;
-    }
+    }*/
 
     fetch('/updateProfile', {
         method: 'POST',
@@ -584,6 +603,8 @@ function updateProfile() {
     })
     .catch(error => console.error('Error:', error));
 }
+
+
 
 
 

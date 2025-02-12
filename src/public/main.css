@@ -506,6 +506,7 @@ h2 {
 }
 
 #profileSection {
+    display: none;
     max-width: 500px;
     margin: 40px auto;
     padding: 20px;
@@ -595,7 +596,7 @@ h2 {
     color: #6200ea;
 }
 
-#createSection form, #settingsSection form {
+#createSection form, #settingsSection form, #profileSection form{
     display: flex;
     flex-direction: column;
 }
