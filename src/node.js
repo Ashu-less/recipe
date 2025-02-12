@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: '',  
+    password: 'Ashutosh1!',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -276,7 +276,7 @@ app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
 
 
 app.post('/updateProfile', (req, res) => {
-    const { user_id, username, email, password, about_me } = req.body;
+    const { user_id, username, email, password, about_me, preference } = req.body;
 
     if (!user_id) {
         return res.status(400).json({ error: 'User ID is required' });
@@ -302,6 +302,12 @@ app.post('/updateProfile', (req, res) => {
         values.push(about_me);
     }
 
+    if (preference) {
+        updateFields.push('preference = ?');
+        values.push(preference);
+    }
+
+
     if (updateFields.length === 0) {
         return res.status(400).json({ error: 'No valid fields provided to update' });
     }
@@ -324,7 +330,7 @@ app.get('/getUserData', (req, res) => {
         return res.status(400).json({ error: 'User ID is required' });
     }
 
-    const getUserSql = 'SELECT username, email, about_me FROM users WHERE user_id = ?';
+    const getUserSql = 'SELECT username, email, about_me, preference FROM users WHERE user_id = ?';
     db.query(getUserSql, [user_id], (err, results) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching user data' });

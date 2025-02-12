@@ -571,6 +571,7 @@ function updateProfile()
     const email = document.getElementById('emailProfile').value.trim()
     const password = document.getElementById('passwordProfile').value.trim()
     const aboutMe = document.getElementById('aboutMe').value.trim()
+    const preference = document.getElementById('preferenceProfile').value.trim()
     
 
 
@@ -588,7 +589,7 @@ function updateProfile()
     fetch('/updateProfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: userId, username, email, password, about_me: aboutMe })
+        body: JSON.stringify({ user_id: userId, username, email, password, about_me: aboutMe, preference})
     })
     .then(response => response.json())
     .then(data => {
@@ -599,6 +600,7 @@ function updateProfile()
             document.getElementById('profileUsername').textContent = username;
             document.getElementById('profileEmail').textContent = email;
             document.getElementById('profileAboutMe').textContent = aboutMe || "No bio available";
+            document.getElementById('profilePreference').textContent = preference;
         }
     })
     .catch(error => console.error('Error:', error));
