@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsForm = document.getElementById('settingsForm');
     const profileForm = document.getElementById('profileForm');
 
+    const mealType = document.getElementById('mealType');
+    const dietType = document.getElementById('dietType');
+    const cookingTime = document.getElementById('cookingTime');
+    const searchInput = document.getElementById('searchRecipes');
+    const searchBtn = document.querySelector('.search-btn');
+
     if (signInForm) {
         signInForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -321,12 +327,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         recipeCards.forEach(card => {
             const title = card.querySelector('h3').textContent.toLowerCase();
+            const dishType = card.getAttribute('data-dish-type') || '';
+            const cookingTime = card.getAttribute('data-cooking-time') || '';
             let shouldShow = true;
-
+            //search word filter
             if (searchTerm && !title.includes(searchTerm)) {
                 shouldShow = false;
             }
+            //meal type filter et......
+            if (selectedMeal && dishType !== selectedMeal) {
+                shouldShow = false;
+            }
 
+            
 
             card.style.display = shouldShow ? 'block' : 'none';
         });

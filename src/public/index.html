@@ -47,6 +47,27 @@
     </div>
 
     <div id="homepageSection" class="container" style="display: none;">
+        <div class="filter-section">
+        <div class="search-group">
+            <input type="text" id="searchRecipes" placeholder="Search recipes...">
+            <button class="search-btn">🔍 Search</button>
+        </div>
+        <div class="filter-group">
+            <select id="mealType">
+                <option value="">All Meal Types</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snack">Snack</option>
+            </select>
+            <select id="dietType">
+                <option value="">All Diet Types</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Non-vegetarian">Non-vegetarian</option>
+                <option value="Vegan">Vegan</option>
+            </select>
+        </div>
+    </div>
         <div id = "recipeContainer" class="recipe-grid">
             <div class="recipe-card" data-recipe-id="2">
                 <div class="icon">
@@ -121,6 +142,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
     <div id="suggestedSection" class="container" style="display: none;">
