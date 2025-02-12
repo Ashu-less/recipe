@@ -267,13 +267,13 @@ body {
 .like-btn {
     background: none;
     border: none;
-    color: #6200ea;
+    color: red;
     cursor: pointer;
     font-size: 24px;
 }
 
 .like-btn.liked {
-    color: red;
+    color: grey;
 }
 
 .like-btn:not(.liked) {
