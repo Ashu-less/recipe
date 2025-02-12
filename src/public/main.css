@@ -506,49 +506,79 @@ h2 {
 }
 
 #profileSection {
-    background: white;
-    border-radius: 10px;
+    max-width: 500px;
+    margin: 40px auto;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 #profileSection h2 {
     font-size: 24px;
-    margin-bottom: 20px;
-    color: #6200ea;
+    color: #333;
+    margin-bottom: 10px;
 }
 
 #profileSection p {
     font-size: 16px;
-    margin: 10px 0;
+    color: #666;
+    margin: 8px 0;
 }
 
 #profileSection strong {
-    color: #333;
+    color: #222;
 }
 
+#profileSection input,
 #profileSection textarea {
     width: 100%;
     padding: 10px;
+    margin: 8px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#profileSection input:focus,
+#profileSection textarea:focus {
+    border-color: #4CAF50;
+}
+
+#profileSection textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#updateProfileBtn {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
     margin-top: 10px;
 }
 
-#editProfileBtn {
-    background-color: #6200ea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+#updateProfileBtn:hover {
+    background: #45a049;
 }
 
-#editProfileBtn:hover {
-    background-color: #3700b3;
+@media (max-width: 600px) {
+    #profileSection {
+        width: 90%;
+        padding: 15px;
+    }
+
+    #profileSection h2 {
+        font-size: 22px;
+    }
 }
 
 #createSection, #settingsSection {
