@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: '',  
+    password: 'Ashutosh1!',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -113,7 +113,6 @@ app.post('/signout', (req, res) => {
         res.sendStatus(200);
     });
 });
-
 app.post('/like/:recipeId', (req, res) => {
     const recipeId = req.params.recipeId;
     const userId = req.body.user_id;

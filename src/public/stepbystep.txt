@@ -1,32 +1,5 @@
-1. Having an image uploaded in my create and being functional, hits the database, makes a new recipe (fully working)-> shows up on home page now/ search
-
-
-
-
-2. 1 like only-> unlike and like visual (grey heart when I have already liked and red heart when liked)
-
-
-
-
-3. preferences in profile-> working/ editable profile, take data from sign up along with an about me thats editable
-
-
-
-
-
-
-
-
-
-4. sign out feature
-
-
-
-5. fix the sign up being with first name-> later fix tho as its not imp
-
- 
-
-WHATS LEFT:
-1. image directly loads when touching homepage
-3. search needs to be added back
-4. fix the swapping of hearts
+1. sign out feature
+2. have it insta work when create, not have to reload
+3. like ui red/grey buh (color bug)
+4. Profile current user, pass, etc.. displaying
+5. fix search 

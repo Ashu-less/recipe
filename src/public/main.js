@@ -547,6 +547,10 @@ document.getElementById("signOutBtn").addEventListener("click", function() {
     signOut();
 });
 
+document.getElementById("signOutBtn").addEventListener("click", function() {
+    signOut();
+});
+
 function signOut() {
     fetch('/signout', {
         method: 'POST',
@@ -556,6 +560,7 @@ function signOut() {
     })
     .then(response => {
         if (response.ok) {
+            sessionStorage.removeItem('user_id'); // Clear user_id from sessionStorage
             document.getElementById("navbar").style.display = "none";
             document.getElementById("auth-section").style.display = "block";
             document.getElementById("homepageSection").style.display = "none";
@@ -586,18 +591,6 @@ function updateProfile()
     const aboutMe = document.getElementById('aboutMe').value.trim()
     const preference = document.getElementById('preferenceProfile').value.trim()
     
-
-
-
-   /* if (!username || !email) {
-        console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("About Me:", aboutMe);
-        alert("Username and email cannot be empty.");
-        
-        return;
-    }*/
 
     fetch('/updateProfile', {
         method: 'POST',
