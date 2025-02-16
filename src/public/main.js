@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const createRecipeForm = document.getElementById('createRecipeForm');
     const settingsForm = document.getElementById('settingsForm');
     const profileForm = document.getElementById('profileForm');
+    const signOutBtn = document.getElementById("signOutBtn");
 
     const mealType = document.getElementById('mealType');
     const dietType = document.getElementById('dietType');
@@ -46,6 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             updateProfile();
         });
+    }
+
+    if (signOutBtn) {
+        signOutBtn.addEventListener("click", function() {
+            console.log("Sign out button clicked");
+            signOut();
+        });
+    } else {
+        console.error("Sign out button not found!");
     }
     
 
@@ -543,13 +553,7 @@ document.getElementById('settingsForm').addEventListener('submit', function(even
     .catch(error => console.error('Error:', error));
 });
 
-document.getElementById("signOutBtn").addEventListener("click", function() {
-    signOut();
-});
 
-document.getElementById("signOutBtn").addEventListener("click", function() {
-    signOut();
-});
 
 function signOut() {
     fetch('/signout', {
@@ -560,7 +564,7 @@ function signOut() {
     })
     .then(response => {
         if (response.ok) {
-            sessionStorage.removeItem('user_id'); // Clear user_id from sessionStorage
+            sessionStorage.removeItem('user_id'); 
             document.getElementById("navbar").style.display = "none";
             document.getElementById("auth-section").style.display = "block";
             document.getElementById("homepageSection").style.display = "none";

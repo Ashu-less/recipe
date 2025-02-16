@@ -16,10 +16,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+    secret: 'abc123', 
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } 
+}));
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: 'Ashutosh1!',  
+    password: '',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -108,9 +115,11 @@ app.post('/signin', (req, res) => {
 app.post('/signout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
+            console.error('Error destroying session:', err);
             return res.status(500).send('Could not log out.');
         }
-        res.sendStatus(200);
+        res.clearCookie('connect.sid');
+        return res.status(200).json({ message: 'Logged out successfully' });
     });
 });
 app.post('/like/:recipeId', (req, res) => {
