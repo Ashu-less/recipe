@@ -1,7 +1,7 @@
 1. sign out feature DDONEEE
 2. have it insta work when create, not have to reload
 3. like ui red/grey buh (color bug)
-4. Profile current user, pass, etc.. displaying
+4. Profile current user, pass, etc.. displaying   DONEEE
 5. fix search 
 
 

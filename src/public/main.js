@@ -99,8 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
         recipes.forEach(recipe => {
             const recipeCard = document.createElement('div');
             recipeCard.className = 'recipe-card';
+            recipeCard.setAttribute('data-recipe-id', recipe.recipe_id);
             recipeCard.innerHTML = `
-                <div class="icon"><img src="/images/${recipe.dishName.replace(/\s+/g, ' ')}.jpg" alt="${recipe.dishName}"></div>
+                <div class="icon">
+                    <img src="/images/${recipe.dishName.replace(/\s+/g, ' ')}.jpg?t=${new Date().getTime()}" alt="${recipe.dishName}">
+                </div>
                 <h3>${recipe.dishName}</h3>
                 <div class="actions">
                     <span class="like-count">❤️ <span class="likes" data-recipe-id="${recipe.recipe_id}">${recipe.likes}</span> Likes</span>
@@ -139,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 })
                 .then(data => {
+                    console.log('Like response:', data);
                     let likeCountElement = document.querySelector(`.likes[data-recipe-id='${recipeId}']`);
                     if (data.likes !== undefined) {
                         likeCountElement.textContent = data.likes;
@@ -181,16 +185,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id, comment_text: commentText })
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                        } else {
-                            commentInput.value = ''; 
-                            loadComments(recipeId); 
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        commentInput.value = ''; 
+                        loadComments(recipeId); 
+                    }
+                })
+                .catch(error => console.error('Error:', error));
             });
         });
     })
@@ -247,6 +251,7 @@ function handleSignin(event) {
                 document.getElementById("navbar").style.display = "flex";
                 document.getElementById("homepageSection").style.display = "flex";
                 setActiveButton("homeBtn");
+                loadUserProfile();
             } else {
                 alert('Invalid username or password');
             }
@@ -493,7 +498,6 @@ function addRecipeToHomepage(recipeId, dishName, imagePath) {
     const recipeCard = document.createElement('div');
     recipeCard.className = 'recipe-card';
     recipeCard.setAttribute('data-recipe-id', recipeId);
-
     recipeCard.innerHTML = `
         <div class="icon">
             <img src="/images/${imagePath}?t=${new Date().getTime()}" alt="${dishName}">
@@ -504,11 +508,142 @@ function addRecipeToHomepage(recipeId, dishName, imagePath) {
             <span>💬 0 Comments</span>
             <button class="like-btn" data-recipe-id="${recipeId}">❤️ Like</button>
         </div>
+        <div class="comments-section">
+            <h4>Comments:</h4>
+            <div class="comments-container" id="comments-${recipeId}"></div>
+            <input type="text" id="comment-input-${recipeId}" placeholder="Add a comment..." />
+            <button class="comment-btn" data-recipe-id="${recipeId}">💬 Comment</button>
+        </div>
     `;
 
     recipeContainer.prepend(recipeCard);
+    recipeCard.querySelector('.like-btn').addEventListener('click', function () {
+        const userId = sessionStorage.getItem('user_id');
+
+        fetch(`/like/${recipeId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            const likeCountElement = recipeCard.querySelector(`.likes[data-recipe-id='${recipeId}']`);
+            likeCountElement.textContent = data.likes;
+            this.classList.toggle('liked');
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    recipeCard.querySelector('.comment-btn').addEventListener('click', function () {
+        const commentInput = document.getElementById(`comment-input-${recipeId}`);
+        const commentText = commentInput.value.trim();
+        const userId = sessionStorage.getItem('user_id');
+
+        if (!commentText) {
+            alert("Comment cannot be empty!");
+            return;
+        }
+        if (!userId) {
+            alert("You must be logged in to comment.");
+            return;
+        }
+
+        fetch(`/comment/${recipeId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, comment_text: commentText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                commentInput.value = ''; 
+                loadComments(recipeId); 
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    loadComments(recipeId)
 }
 
+function attachLikeButtonListener(recipeCard) {
+    const likeButton = recipeCard.querySelector('.like-btn');
+    likeButton.addEventListener('click', function () {
+        const recipeId = this.getAttribute('data-recipe-id');
+        const userId = sessionStorage.getItem('user_id');
+
+        fetch(`/like/${recipeId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    alert(data.error);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Like response:', data);
+            let likeCountElement = recipeCard.querySelector(`.likes[data-recipe-id='${recipeId}']`);
+            if (data.likes !== undefined) {
+                likeCountElement.textContent = data.likes;
+            } else {
+                likeCountElement.textContent = 'Likes';
+            }
+            if (this.classList.contains('liked')) {
+                this.classList.remove('liked');
+            } else {
+                this.classList.add('liked');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+}
+
+function attachCommentButtonListener(recipeCard) {
+    const commentButton = recipeCard.querySelector('.comment-btn');
+    commentButton.addEventListener('click', function () {
+        const recipeId = this.getAttribute('data-recipe-id');
+        const commentInput = document.getElementById(`comment-input-${recipeId}`);
+        const commentText = commentInput.value.trim();
+
+        if (!commentText) {
+            alert("Comment cannot be empty!");
+            return;
+        }
+
+        const user_id = sessionStorage.getItem('user_id');
+        if (!user_id) {
+            alert("You must be logged in to comment.");
+            return;
+        }
+
+        fetch(`/comment/${recipeId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id, comment_text: commentText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                commentInput.value = '';
+                loadComments(recipeId);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+}
 
 document.getElementById('createBtn').addEventListener('click', function(event) {
     event.preventDefault();
@@ -538,7 +673,7 @@ document.getElementById('createRecipeForm').addEventListener('submit', function(
         } else {
             alert('Recipe created successfully!');
             document.getElementById('createRecipeForm').reset();
-            addRecipeToHomepage(data.recipeId, data.message, data.imagePath);
+            addRecipeToHomepage(data.recipeId, data.dishName, data.imagePath);
             console.log(`Loading image from path: /images/${data.imagePath}`);
         }
     })
