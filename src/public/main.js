@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("profileBtn").addEventListener("click", function() {
         showSection("profileSection"); 
         setActiveButton("profileBtn");
+        loadUserProfile();
     });
 
     document.getElementById("settingsBtn").addEventListener("click", function() {
@@ -196,6 +197,32 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error('Error fetching recipes:', error));
 
 });
+
+function loadUserProfile() {
+    const userId = sessionStorage.getItem('user_id'); // Retrieve stored user ID
+    if (!userId) {
+        alert("You must be logged in to view your profile.");
+        return;
+    }
+
+    fetch(`/getUserData?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+
+                document.getElementById('displayFirstName').textContent = data.first_name || "N/A";
+                document.getElementById('displayLastName').textContent = data.last_name || "N/A";
+                document.getElementById('displayUsername').textContent = data.username;
+                document.getElementById('displayEmail').textContent = data.email;
+                document.getElementById('displayPreference').textContent = data.preference || "Not specified";
+
+            }
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+}
+
 
 function handleSignin(event) {
     event.preventDefault();

@@ -338,7 +338,7 @@ app.get('/getUserData', (req, res) => {
         return res.status(400).json({ error: 'User ID is required' });
     }
 
-    const getUserSql = 'SELECT username, email, about_me, preference FROM users WHERE user_id = ?';
+    const getUserSql = 'SELECT username, email, first_name, last_name, about_me, preference FROM users WHERE user_id = ?';
     db.query(getUserSql, [user_id], (err, results) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching user data' });
@@ -350,6 +350,9 @@ app.get('/getUserData', (req, res) => {
         }
     });
 });
+
+
+
 
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');
