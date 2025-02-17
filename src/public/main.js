@@ -361,37 +361,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function filterRecipes() {
         const searchTerm = searchInput.value.toLowerCase();
-        const selectedMeal = mealType.value;
-        const selectedDiet = dietType.value;
-        const selectedTime = cookingTime.value;
-
         const recipeCards = document.querySelectorAll('.recipe-card');
         
         recipeCards.forEach(card => {
             const title = card.querySelector('h3').textContent.toLowerCase();
-            const dishType = card.getAttribute('data-dish-type') || '';
-            const cookingTime = card.getAttribute('data-cooking-time') || '';
-            let shouldShow = true;
-            //search word filter
-            if (searchTerm && !title.includes(searchTerm)) {
-                shouldShow = false;
-            }
-            //meal type filter et......
-            if (selectedMeal && dishType !== selectedMeal) {
-                shouldShow = false;
-            }
-
-            
-
-            card.style.display = shouldShow ? 'block' : 'none';
+           
+            card.style.display = title.includes(searchTerm) ? 'block' : 'none';
         });
     }
 
-    searchBtn.addEventListener('click', filterRecipes);
-    searchInput.addEventListener('keyup', filterRecipes);
-    mealType.addEventListener('change', filterRecipes);
-    dietType.addEventListener('change', filterRecipes);
-    cookingTime.addEventListener('change', filterRecipes);
+    searchInput.addEventListener('input', filterRecipes);
+
+  
 });
 
 

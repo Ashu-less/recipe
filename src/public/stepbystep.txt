@@ -1,8 +1,13 @@
-1. sign out feature DDONEEE
-2. have it insta work when create, not have to reload
-3. like ui red/grey buh (color bug)
-4. Profile current user, pass, etc.. displaying   DONEEE
-5. fix search 
+
+2. have it insta work when create, not have to reload (only have comment sowrking rn, get likes and images to load)
+3. like ui red/grey buh (color bug)-Next
+
+
 
 
    npm install express-session
+
+
+   5. fix search DONEEE
+   4. Profile current user, pass, etc.. displaying   DONEEE
+   1. sign out feature DDONEEE
