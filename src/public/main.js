@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // comments are loaded here 
             loadComments(recipe.recipe_id);
+
+            checkIfLiked(recipe.recipe_id);
         });
 
         // liking the recipes
@@ -201,6 +203,26 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error('Error fetching recipes:', error));
 
 });
+
+function checkIfLiked(recipeId) {
+    const userId = sessionStorage.getItem('user_id');
+
+    if (!userId) return; 
+
+    fetch(`/hasLiked/${recipeId}?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.liked) {
+                const likeButton = document.querySelector(`.like-btn[data-recipe-id='${recipeId}']`);
+                if (likeButton) {
+                    likeButton.classList.add('liked');
+                    likeButton.style.color = 'red';
+                }
+            }
+        })
+        .catch(error => console.error('Error checking like status:', error));
+}
+
 
 function loadUserProfile() {
     const userId = sessionStorage.getItem('user_id'); // Retrieve stored user ID

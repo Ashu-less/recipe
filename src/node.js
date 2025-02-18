@@ -231,6 +231,24 @@ app.get('/recipes', (req, res) => {
     });
 });
 
+app.get('/hasLiked/:recipeId', (req, res) => {
+    const recipeId = req.params.recipeId;
+    const userId = req.query.user_id;
+
+    if (!userId) {
+        return res.status(400).json({ error: "User ID is required" });
+    }
+
+    const sql = 'SELECT * FROM likes WHERE recipe_id = ? AND user_id = ?';
+    db.query(sql, [recipeId, userId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error checking like status' });
+        }
+        res.json({ liked: results.length > 0 });
+    });
+});
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, path.join(__dirname, 'public/images/'));
