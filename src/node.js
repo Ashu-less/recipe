@@ -26,7 +26,7 @@ app.use(session({
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: 'Ashutosh1!',  
+    password: '',  
     database: 'recinsta',
     //port: '8000'
 });
@@ -270,12 +270,14 @@ app.post('/create-recipe', upload.single('recipeImage'), (req, res) => {
         imagePath = `/images/${req.file.filename}`;
 
         const targetPath = path.join(__dirname, 'public/images', req.file.filename);
-        fs.rename(tempPath, targetPath, (err) => {
-            if (err) {
+        fs.promises.rename(tempPath, targetPath)
+            .then(() => {
+                console.log('File moved successfully:', targetPath);
+            })
+            .catch(err => {
                 console.error('Error moving file:', err);
                 return res.status(500).json({ error: 'Error saving image' });
-            }
-        });
+            });
     }
     
 

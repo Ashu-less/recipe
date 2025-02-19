@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const recipeId = this.getAttribute('data-recipe-id');
                 const userId = sessionStorage.getItem('user_id');
 
+
                 fetch(`/like/${recipeId}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -472,16 +473,24 @@ function createRecipe() {
     formData.append('dishName', document.getElementById('recipeName').value);
     formData.append('steps', document.getElementById('recipeSteps').value);
     formData.append('dishType', document.getElementById('dishType').value);
-    
-    if (document.getElementById('recipeImage').files[0]) {
-        formData.append('recipeImage', document.getElementById('recipeImage').files[0]);
+    const recipeImage = document.getElementById('recipeImage').files[0]
+    if (recipeImage) {
+        formData.append('recipeImage', recipeImage);
     }
 
     fetch('/create-recipe', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // If the response is not OK, parse the error message
+            return response.json().then(data => {
+                throw new Error(data.error || 'An error occurred while creating the recipe.');
+            });
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.error) {
             alert(data.error);
@@ -494,7 +503,10 @@ function createRecipe() {
             addRecipeToHomepage(data.recipeId, data.dishName, data.imagePath);
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while creating the recipe.');
+    });
 }
 
 function addRecipeToHomepage(recipeId, dishName, imagePath) {
@@ -504,12 +516,11 @@ function addRecipeToHomepage(recipeId, dishName, imagePath) {
     recipeCard.setAttribute('data-recipe-id', recipeId);
     recipeCard.innerHTML = `
         <div class="icon">
-            <img src="/images/${imagePath}?t=${new Date().getTime()}" alt="${dishName}">
+            <img src="/images/${imagePath}" alt="${dishName}">
             <h3>${dishName}</h3>
         </div>
         <div class="actions">
             <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
-            <span>💬 0 Comments</span>
             <button class="like-btn" data-recipe-id="${recipeId}">❤️ Like</button>
         </div>
         <div class="comments-section">
