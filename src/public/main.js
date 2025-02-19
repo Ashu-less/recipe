@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (createRecipeForm) {
         createRecipeForm.addEventListener('submit', function(event) {
             event.preventDefault();
+            console.log('Form submit triggered');
             createRecipe();
         });
     }
@@ -653,7 +654,7 @@ document.getElementById('createBtn').addEventListener('click', function(event) {
     showCreateRecipeSection();
 });
 
-document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
+/*document.getElementById('createRecipeForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const formData = new FormData();
@@ -681,7 +682,7 @@ document.getElementById('createRecipeForm').addEventListener('submit', function(
         }
     })
     .catch(error => console.error('Error:', error));
-});
+});*/
 
 document.getElementById('togglePassword').addEventListener('click', function() {
     const passwordField = document.getElementById('profilePassword');

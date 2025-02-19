@@ -1,6 +1,6 @@
 
 2. have it insta work when create, not have to reload (only have comment sowrking rn, get likes and images to load)
-3. like ui red/grey buh (color bug)-Next
+
 
 
 
@@ -11,3 +11,4 @@
    5. fix search DONEEE
    4. Profile current user, pass, etc.. displaying   DONEEE
    1. sign out feature DDONEEE
+   3. like ui red/grey buh (color bug)- DOONEEEEEE
