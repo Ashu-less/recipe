@@ -157,8 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Toggle the liked class based on the response
                     if (this.classList.contains('liked')) {
                         this.classList.remove('liked');
+                        this.style.color = 'grey';
                     } else {
                         this.classList.add('liked');
+                        this.style.color = 'red';
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -220,7 +222,11 @@ function checkIfLiked(recipeId) {
                     likeButton.classList.add('liked');
                     likeButton.style.color = 'red';
                 }
+            } else {
+                likeButton.classList.remove('liked');
+                likeButton.style.color = 'grey'; 
             }
+            
         })
         .catch(error => console.error('Error checking like status:', error));
 }
