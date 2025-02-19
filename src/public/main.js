@@ -469,11 +469,20 @@ function showCreateRecipeSection() {
 
 
 function createRecipe() {
+    const dishName = document.getElementById('recipeName').value;
+    const steps = document.getElementById('recipeSteps').value;
+    const dishType = document.getElementById('dishType').value;
+    const recipeImage = document.getElementById('recipeImage').files[0];
+
+    if (!dishName || !steps || !dishType) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+
     const formData = new FormData();
-    formData.append('dishName', document.getElementById('recipeName').value);
-    formData.append('steps', document.getElementById('recipeSteps').value);
-    formData.append('dishType', document.getElementById('dishType').value);
-    const recipeImage = document.getElementById('recipeImage').files[0]
+    formData.append('dishName', dishName);
+    formData.append('steps', steps);
+    formData.append('dishType', dishType);
     if (recipeImage) {
         formData.append('recipeImage', recipeImage);
     }
@@ -484,7 +493,6 @@ function createRecipe() {
     })
     .then(response => {
         if (!response.ok) {
-            // If the response is not OK, parse the error message
             return response.json().then(data => {
                 throw new Error(data.error || 'An error occurred while creating the recipe.');
             });
@@ -499,7 +507,7 @@ function createRecipe() {
             document.getElementById('createRecipeForm').reset();
             document.getElementById('createSection').style.display = 'none';
             document.getElementById('homepageSection').style.display = 'block';
-            console.log(`Loading image from path: /images/${data.imagePath}`);
+            
             addRecipeToHomepage(data.recipeId, data.dishName, data.imagePath);
         }
     })
@@ -516,11 +524,12 @@ function addRecipeToHomepage(recipeId, dishName, imagePath) {
     recipeCard.setAttribute('data-recipe-id', recipeId);
     recipeCard.innerHTML = `
         <div class="icon">
-            <img src="/images/${imagePath}" alt="${dishName}">
-            <h3>${dishName}</h3>
+            
+            <img src="/images/${dishName.replace(/\s+/g, ' ')}.jpg?t=${new Date().getTime()}" alt="${dishName}">
         </div>
+        <h3>${dishName}</h3>
         <div class="actions">
-            <span class="like-count">❤️ <span class="likes">0</span> Likes</span>
+            <span class="like-count">❤️ <span class="likes" data-recipe-id="${recipeId}">0</span> Likes</span>
             <button class="like-btn" data-recipe-id="${recipeId}">❤️ Like</button>
         </div>
         <div class="comments-section">
