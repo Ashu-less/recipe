@@ -26,7 +26,7 @@ app.use(session({
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  
-    password: '',  
+    password: 'Ashutosh1!',  
     database: 'recinsta',
     //port: '8000'
 });
